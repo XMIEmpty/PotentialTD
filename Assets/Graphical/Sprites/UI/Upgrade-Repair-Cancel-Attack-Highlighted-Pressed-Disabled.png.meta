@@ -1,0 +1,391 @@
+fileFormatVersion: 2
+guid: 4da20d4ead3c88c4b9811349a9c73030
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3631767329395025393
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_0
+  - first:
+      213: 1968887179780436561
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_1
+  - first:
+      213: 9171552595896233918
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_2
+  - first:
+      213: 2944178467397322332
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_3
+  - first:
+      213: -2309569482221313680
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_4
+  - first:
+      213: -2204536507506746717
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_5
+  - first:
+      213: 1156488253078650723
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_6
+  - first:
+      213: -502891503227655676
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_7
+  - first:
+      213: 31718625258272586
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_8
+  - first:
+      213: -5585101360376184429
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_9
+  - first:
+      213: 8136658679633899394
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_10
+  - first:
+      213: -5715511815374403192
+    second: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_11
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 64
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 64
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0a5a881bde599dc0800000000000000
+      internalID: -3631767329395025393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15232a95574e25b10800000000000000
+      internalID: 1968887179780436561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_2
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 48
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebfe4353e76e74f70800000000000000
+      internalID: 9171552595896233918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c56429897b2dbd820800000000000000
+      internalID: 2944178467397322332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_4
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 071ad14eac2c2ffd0800000000000000
+      internalID: -2309569482221313680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_5
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 32
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa1eaff9b9e761e0800000000000000
+      internalID: -2204536507506746717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36f3aa750fbac0010800000000000000
+      internalID: 1156488253078650723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_7
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40aad8d97de5509f0800000000000000
+      internalID: -502891503227655676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_8
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 16
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47784febefa07000800000000000000
+      internalID: 31718625258272586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3910a3467ebbd72b0800000000000000
+      internalID: -5585101360376184429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_10
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28f6d2295f73be070800000000000000
+      internalID: 8136658679633899394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Upgrade-Repair-Cancel-Attack-Highlighted-Pressed-Disabled_11
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8898f07394c6ea0b0800000000000000
+      internalID: -5715511815374403192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

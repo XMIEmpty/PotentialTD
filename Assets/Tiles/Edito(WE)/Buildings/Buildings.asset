@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948519fa624351945b30fc5fd367009b, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: 
+  particlecase: {fileID: 1877648165470169112, guid: ad9b9eb6ab336404ba25686d2684f0ab,
+    type: 3}
+  posToInstantiate: {fileID: 0}
+  containers:
+  - categoryName: Defence
+    categoryItems:
+    - {fileID: 11400000, guid: 92365db6e6238594fabdffc453baf730, type: 2}
+    - {fileID: 11400000, guid: 7886c31a5e6b3974ba36b437fb70f3ff, type: 2}
+  - categoryName: Storage
+    categoryItems:
+    - {fileID: 11400000, guid: 5f547b96ad096c0488757ca57fe58e47, type: 2}
+  - categoryName: Work
+    categoryItems:
+    - {fileID: 11400000, guid: 3d7638ea0ae4cef4285bc5290f05513a, type: 2}
+  - categoryName: Health
+    categoryItems:
+    - {fileID: 11400000, guid: c44db957112c2b740be67a3a1ee08f7b, type: 2}
+  - categoryName: 
+    categoryItems: []
+  - categoryName: 
+    categoryItems: []
+  - categoryName: 
+    categoryItems: []
+  - categoryName: 
+    categoryItems: []
+  - categoryName: 
+    categoryItems: []
+  - categoryName: Situational
+    categoryItems:
+    - {fileID: 11400000, guid: 690de57c9a3511a458c023abb75993e0, type: 2}
