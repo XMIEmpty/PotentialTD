@@ -22,23 +22,23 @@ public class SelectTile : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Runs thru containers in selected container file, runs thru all container itemlists and returns item which's name  containt ths containsInName
-    /// </summary>
-    private RuleTileSiblings GetRuleTileSibling(string containsInName)
-    {
-        for (int i = 0; i < tilesHandler.tilesContainer.containers.Length; i++)
-        {
-            for (int j = 0; j < tilesHandler.tilesContainer.containers[i].categoryItems.Length; j++)
-            {
-                if (tilesHandler.tilesContainer.containers[i].categoryItems[j].name.Equals(containsInName))
-                {
-                    return tilesHandler.tilesContainer.containers[i].categoryItems[j];
-                }
-            }
-        }
-        return null;
-    }
+    ///// <summary>
+    ///// Runs thru containers in selected container file, runs thru all container itemlists and returns item which's name  containt ths containsInName
+    ///// </summary>
+    //private RuleTileSiblings GetRuleTileSibling(string containsInName)
+    //{
+    //    for (int i = 0; i < tilesHandler.tilesContainer.containers.Length; i++)
+    //    {
+    //        for (int j = 0; j < tilesHandler.tilesContainer.containers[i].categoryItems.Length; j++)
+    //        {
+    //            if (tilesHandler.tilesContainer.containers[i].categoryItems[j].name.Equals(containsInName))
+    //            {
+    //                return tilesHandler.tilesContainer.containers[i].categoryItems[j];
+    //            }
+    //        }
+    //    }
+    //    return null;
+    //}
 
 
 
@@ -59,30 +59,30 @@ public class SelectTile : MonoBehaviour
 
 
 
-    /// <summary>
-    /// Uses the GetRuleTileSibling to get the tile & uses it's values to change the selection
-    /// </summary>
-    private void GetAndProcessTile(string containsInName)
-    {
-        RuleTileSiblings foundTile = GetRuleTileSibling(containsInName);
-        tilesHandler.selectedTileToBuild = foundTile;
-        tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.m_DefaultSprite;
-    }
+    ///// <summary>
+    ///// Uses the GetRuleTileSibling to get the tile & uses it's values to change the selection
+    ///// </summary>
+    //private void GetAndProcessTile(string containsInName)
+    //{
+    //    RuleTileSiblings foundTile = GetRuleTileSibling(containsInName);
+    //    tilesHandler.selectedTileToBuild = foundTile;
+    //    tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.m_DefaultSprite;
+    //}
 
 
     private void GetAndProcessPrefabData(string containsInName)
     {
         GameObject foundTile = GetPrefabTile(containsInName);
         tilesHandler.selectedTileToBuild = foundTile;
-        tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.m_DefaultSprite;
+        tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.GetComponent<SpriteRenderer>().sprite;
     }
 
 
-    public void GetTent() => GetAndProcessTile("Tent");
-    public void GetMushLogCabin() => GetAndProcessTile("MushLogCabin");
-    public void GetFarm() => GetAndProcessTile("Farm");
-    public void GetWall() => GetAndProcessTile("Wall");
-    public void GetGate() => GetAndProcessTile("Gate");
+    public void GetTent() => GetAndProcessPrefabData("Tent");
+    public void GetMushLogCabin() => GetAndProcessPrefabData("MushLogCabin");
+    public void GetFarm() => GetAndProcessPrefabData("Farm");
+    public void GetWall() => GetAndProcessPrefabData("Wall");
+    public void GetGate() => GetAndProcessPrefabData("Gate");
 
 
     public void GetTileByName(string tileName) => GetAndProcessPrefabData(tileName);

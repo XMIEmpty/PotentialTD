@@ -18,7 +18,7 @@ public class TileHandling : MonoBehaviour
     public PrefabTileContainer prefabTileContainer;
 
     public Sprite defaultTileHighlighter;
-    public TileBase selectedTileToBuild;
+    public GameObject selectedTileToBuild;
     public Tilemap buildingsTilemap;
 
     [SerializeField]
@@ -82,7 +82,7 @@ public class TileHandling : MonoBehaviour
                     {
                         if (!selectedTileToBuild) return;
 
-                        buildingsTilemap.SetTile(cellPosition, selectedTileToBuild);
+                        //buildingsTilemap.SetTile(cellPosition, selectedTileToBuild);
                         //tileSelectioning.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
                     }
 
