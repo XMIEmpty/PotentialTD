@@ -49,13 +49,19 @@ public class TileHandling : MonoBehaviour
     {
         //Processing
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
-        
-        if (EventSystem.current.IsPointerOverGameObject()) return; // DON'T CONTINUE IF MOUSE OVER (G)UI 
-        
+
+        if (EventSystem.current.IsPointerOverGameObject()) // DON'T CONTINUE IF MOUSE OVER (G)UI 
+        {
+            mouseTileHighlighter.SetActive(false);
+            return;
+        }
+
         cellPosition = grid.LocalToCell(clickPosition);
+        if (!mouseTileHighlighter.activeInHierarchy) mouseTileHighlighter.SetActive(true);
         mouseTileHighlighter.transform.position = grid.GetCellCenterLocal(cellPosition);
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
+        RaycastHit2D hit = Physics2D.Raycast(clickPosition, Vector2.zero);
 
 
         if (selectedUnit != null) selectionHighlighter.transform.position = selectedUnit.transform.position;
@@ -75,30 +81,26 @@ public class TileHandling : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                for (int i = 0; i < hits.Length; i++)
+                if (selectedTileToBuild) // Attempt to Build
                 {
-                    if (selectedTileToBuild) // Attempt to Build
+                    switch (hit.transform.gameObject.layer)
                     {
-                        switch (hits[i].transform.gameObject.layer)
-                        {
-                            case 8: // Entity
+                        case 8: // Entity
 
 
 
-                                break;
-                            case 9: // Tile
+                            break;
+                        case 9: // Tile
 
-                                Debug.Log("Can't Build there [Shift],\n\r hit " + hits[i].transform.gameObject.name);
+                            Debug.Log("Can't Build there [Shift],\n\r hit " + hit.transform.gameObject.name);
 
-                                break;
-                            case 10: // Ground
+                            break;
+                        case 10: // Ground
 
-                                Debug.Log("Build [Shift],\n\r hit " + hits[i].transform.gameObject.name);
-                                Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+                            Debug.Log("Build [Shift],\n\r hit " + hit.transform.gameObject.name);
+                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
 
-                                break;
-                        }
-                        break;
+                            break;
                     }
                 }
             }
@@ -106,88 +108,85 @@ public class TileHandling : MonoBehaviour
         }
 
 
-        if (!Input.GetKey(KeyCode.LeftShift) &&  Input.GetMouseButtonDown(0))
+        if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
-            for (int i = 0; i < hits.Length; i++)
+            // LMB - Down -> Select Tile on ground
+            if (selectedTileToBuild == null) // Attempt to Select
             {
-
-                // LMB - Down -> Select Tile on ground
-                if (selectedTileToBuild == null) // Attempt to Select
+                switch (hit.transform.gameObject.layer)
                 {
-                    switch (hits[i].transform.gameObject.layer)
-                    {
-                        case 8: // Entity
+                    case 8: // Entity
 
-                            /*if (hits[i].transform.gameObject != selectedUnit)*/ LastSelectedUnit = selectedUnit;
-                            selectedUnit = hits[i].transform.gameObject;
+                        /*if (hits[i].transform.gameObject != selectedUnit)*/
+                        LastSelectedUnit = selectedUnit;
+                        selectedUnit = hit.transform.gameObject;
+
+                        canvasComponents.OnClickChanges();
+                        if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
+                        selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(242f / 255f, 211f / 255f, 171f / 255f, 255f / 255f);
+                        Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                        //if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+
+                        break;
+                    case 9: // Tile
+
+                        /*if (hits[i].transform.gameObject != selectedUnit)*/
+                        LastSelectedUnit = selectedUnit;
+                        selectedUnit = hit.transform.gameObject;
+
+                        if (hit.transform.parent == buildingsTM.transform)
+                        {
+
+                            //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
+                            //if (interactable == null) return;
+                            //interactable.Interact();
 
                             canvasComponents.OnClickChanges();
+
                             if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
-                            selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(242f / 255f, 211f / 255f, 171f / 255f, 255f / 255f);
+                            selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(251f / 255f, 245f / 255f, 255f / 255f, 255f / 255f);
                             Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
-                            //if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+                        }
 
-                            break;
-                        case 9: // Tile
+                        break;
+                    case 10: // Ground
 
-                            /*if (hits[i].transform.gameObject != selectedUnit)*/ LastSelectedUnit = selectedUnit;
-                            selectedUnit = hits[i].transform.gameObject;
+                        /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/
+                        LastSelectedUnit = selectedUnit;
+                        selectedUnit = null;
 
-                            if (hits[i].transform.parent == buildingsTM.transform)
-                            {
+                        canvasComponents.OnClickChanges();
 
-                                //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
-                                //if (interactable == null) return;
-                                //interactable.Interact();
+                        if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+                        Debug.Log("Ground has been hit");
 
-                                canvasComponents.OnClickChanges();
-
-                                if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
-                                selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(251f / 255f, 245f / 255f, 255f / 255f, 255f / 255f);
-                                Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
-                            }
-
-                            break;
-                        case 10: // Ground
-
-                            /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/ LastSelectedUnit = selectedUnit;
-                            selectedUnit = null;
-
-                            canvasComponents.OnClickChanges();
-
-                            if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
-                            Debug.Log("Ground has been hit");
-
-                            break;
-                    }
-                    break;
+                        break;
                 }
+            }
 
-                // LMB - Down -> Build One Tile
-                if (selectedTileToBuild && hits[i])   // Attempt to Build
+            // LMB - Down -> Build One Tile
+            if (selectedTileToBuild && hit)   // Attempt to Build
+            {
+                switch (hit.transform.gameObject.layer)
                 {
-                    switch (hits[i].transform.gameObject.layer)
-                    {
-                        case 8: // Entity
+                    case 8: // Entity
 
-                            
 
-                            break;
-                        case 9: // Tile
 
-                                Debug.Log("Can't Build there,\n\r hit " + hits[i].transform.gameObject.name);
+                        break;
+                    case 9: // Tile
 
-                            break;
-                        case 10: // Ground
+                        Debug.Log("Can't Build there,\n\r hit " + hit.transform.gameObject.name);
 
-                            Debug.Log("Build,\n\r hit " + hits[i].transform.gameObject.name);
-                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
-                            mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
-                            selectedTileToBuild = null;
+                        break;
+                    case 10: // Ground
 
-                            break;
-                    }
-                    break;
+                        Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
+                        Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+                        mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
+                        selectedTileToBuild = null;
+
+                        break;
                 }
             }
             return;
@@ -197,21 +196,17 @@ public class TileHandling : MonoBehaviour
         // Right-MouseClick -> Remove Existing Tile
         if (Input.GetMouseButtonDown(1))
         {
-            for (int i = 0; i < hits.Length; i++)
+            switch (hit.transform.gameObject.layer)
             {
-                switch (hits[i].transform.gameObject.layer)
-                {
-                    case 8: // Entity
-                        break;
-                    case 9: // Tile
+                case 8: // Entity
+                    break;
+                case 9: // Tile
 
-                        Destroy(hits[i].transform.gameObject);
+                    Destroy(hit.transform.gameObject);
 
-                        break;
-                    case 10: // Ground
-                        break;
-                }
-                break;
+                    break;
+                case 10: // Ground
+                    break;
             }
             return;
         }
