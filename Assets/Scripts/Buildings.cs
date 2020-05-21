@@ -21,13 +21,14 @@ public class Buildings : MonoBehaviour
     [SerializeField]
     GameObject grid, groundTM, wallsTM, plantsTM, buildingsTM;
 
+
     private void Awake()
     {
         grid = GameObject.Find("Grid").gameObject;
-        groundTM = grid.transform.GetChild(0).gameObject;
-        wallsTM = grid.transform.GetChild(1).gameObject;
-        plantsTM = grid.transform.GetChild(2).gameObject;
-        buildingsTM = grid.transform.GetChild(3).gameObject;
+        groundTM = grid.transform.Find("Grounds").gameObject;
+        wallsTM = grid.transform.Find("Walls").gameObject;
+        plantsTM = grid.transform.Find("Plants").gameObject;
+        buildingsTM = grid.transform.Find("Buildings").gameObject;
 
         for (int i = 0; i < plantsTM.transform.childCount; i++)
         {

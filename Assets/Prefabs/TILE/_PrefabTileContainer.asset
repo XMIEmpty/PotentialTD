@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ae0d20aabe2f34bbc649c8b4d35343, type: 3}
+  m_Name: _PrefabTileContainer
+  m_EditorClassIdentifier: 
+  containers:
+  - containerName: Buildings
+    containerItems:
+    - {fileID: 4554551470595944269, guid: 727b3fbf678a8f2449a39e58bd57b51d, type: 3}
+    - {fileID: 4554551470595944269, guid: 3fcfddf2f51c1da43a41432ad2035ef0, type: 3}
+    - {fileID: 979771531203428146, guid: a597da690c270a94fa4921383099acf5, type: 3}
+  - containerName: Defensive
+    containerItems:
+    - {fileID: 4554551470595944269, guid: 97d65d8d48eb8294ca8fe37423d1d146, type: 3}
+    - {fileID: 4554551470595944269, guid: fb50e6a27a1294e408e403ed986ba621, type: 3}

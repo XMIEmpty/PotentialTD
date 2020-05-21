@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class A_Building : MonoBehaviour, IInteractable
@@ -43,6 +44,12 @@ public class A_Building : MonoBehaviour, IInteractable
     [Space(15)]
     public Animator animator;
 
+    public UnityEvent upgradeEvent;
+    public UnityAction action_Upgrade;
+    public UnityAction action_Repair;
+    public UnityAction action_Cancel;
+    public UnityAction action_Attack;
+
 
     [System.Serializable]
     public class Upgrading
@@ -69,19 +76,18 @@ public class A_Building : MonoBehaviour, IInteractable
     }
 
     [SerializeField] private TileHandling tileHandling;
-    [SerializeField] private Button Upgrade_Button, AttackButton;
-    [SerializeField] private Text Name, UL_Button_Text, UR_Button_Text, DL_Button_Text, DR_Button_Text;
+
     private void Start()
     {
         tileHandling = GameObject.Find("GameManager").GetComponent<TileHandling>();
         //Debug.LogError(tileHandling);
 
-        Name = tileHandling.canvasComponents.tileController.transform.Find("Portrait").Find("Name").GetComponent<Text>();
-        UL_Button_Text = tileHandling.canvasComponents.tileController.transform.Find("UL_Action_Button").Find("Text").GetComponent<Text>();
-        UR_Button_Text = tileHandling.canvasComponents.tileController.transform.Find("UR_Action_Button").Find("Text").GetComponent<Text>();
-        DL_Button_Text = tileHandling.canvasComponents.tileController.transform.Find("DL_Action_Button").Find("Text").GetComponent<Text>();
-        DR_Button_Text = tileHandling.canvasComponents.tileController.transform.Find("DR_Action_Button").Find("Text").GetComponent<Text>();
-
+        transform.position += new Vector3(0.0f, 0.0f, -0.00001f);
+        
+        action_Upgrade = Upgrade;
+        action_Repair = Repair;
+        action_Cancel = CancelAction;
+        action_Attack = Attack;
     }
 
 

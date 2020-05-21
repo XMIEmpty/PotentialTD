@@ -19,7 +19,7 @@ public class TileHandling : MonoBehaviour
 
     public Sprite defaultTileHighlighter;
     public GameObject selectedTileToBuild;
-    public Tilemap buildingsTilemap;
+    public GameObject buildingsTM, plantsTM, wallsTM, groundsTM;
 
     [SerializeField]
     public GameObject mouseTileHighlighter;
@@ -36,8 +36,10 @@ public class TileHandling : MonoBehaviour
     void Awake()
     {
         grid = FindObjectOfType<Grid>();
-        foreach (Tilemap tmap in grid.transform.GetComponentsInChildren<Tilemap>())
-            alltilemaps.Add(tmap);
+        buildingsTM = grid.transform.Find("Buildings").gameObject;
+        plantsTM = grid.transform.Find("Plants").gameObject;
+        wallsTM = grid.transform.Find("Walls").gameObject;
+        groundsTM = grid.transform.Find("Grounds").gameObject;
 
         canvasComponents = GameObject.Find("Canvas").GetComponent<CanvasComponents>();
     }
@@ -48,177 +50,179 @@ public class TileHandling : MonoBehaviour
         //Processing
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
         
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject()) return; // DON'T CONTINUE IF MOUSE OVER (G)UI 
         
         cellPosition = grid.LocalToCell(clickPosition);
-        //clickPosition = grid.GetCellCenterLocal(cellPosition);
         mouseTileHighlighter.transform.position = grid.GetCellCenterLocal(cellPosition);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
+
+
+        if (selectedUnit != null) selectionHighlighter.transform.position = selectedUnit.transform.position;
 
 
 
         // Left_Shift - UP -> Remove Selected Tile
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
-            selectedTileToBuild = null;
+            if (mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite != defaultTileHighlighter) mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
+            if (selectedTileToBuild) selectedTileToBuild = null;
         }
+
 
         // Left_Shift - HOLD DOWN -> Keep Building Selected
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
                 for (int i = 0; i < hits.Length; i++)
                 {
-
-
-                    if (hits[i])
+                    if (selectedTileToBuild) // Attempt to Build
                     {
-                        Debug.Log("I can't build there");
+                        switch (hits[i].transform.gameObject.layer)
+                        {
+                            case 8: // Entity
+
+
+
+                                break;
+                            case 9: // Tile
+
+                                Debug.Log("Can't Build there [Shift],\n\r hit " + hits[i].transform.gameObject.name);
+
+                                break;
+                            case 10: // Ground
+
+                                Debug.Log("Build [Shift],\n\r hit " + hits[i].transform.gameObject.name);
+                                Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+
+                                break;
+                        }
+                        break;
                     }
-
-                    if (!hits[i])
-                    {
-                        if (!selectedTileToBuild) return;
-
-                        //buildingsTilemap.SetTile(cellPosition, selectedTileToBuild);
-                        //tileSelectioning.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
-                    }
-
-
                 }
             }
+            return;
         }
-
 
 
         if (!Input.GetKey(KeyCode.LeftShift) &&  Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
             for (int i = 0; i < hits.Length; i++)
             {
 
                 // LMB - Down -> Select Tile on ground
-                if (selectedTileToBuild == null)
-                /*buildingsTilemap.HasTile(cellPosition) == true*/
+                if (selectedTileToBuild == null) // Attempt to Select
                 {
-                    //switch (hits[i].transform.gameObject.layer)
-                    //{
-                    //    case 8: // Entity
-
-                    //        break;
-                    //    case 9: // Tile
-
-                    //        break;
-                    //}
-
-
-
-                    if (hits[i].transform.parent == buildingsTilemap.transform)
+                    switch (hits[i].transform.gameObject.layer)
                     {
-                        LastSelectedUnit = selectedUnit;
+                        case 8: // Entity
 
-                        var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
-                        if (interactable == null) return;
-                        interactable.Interact();
-                        selectedUnit = hits[i].transform.gameObject;
-                        canvasComponents.OnClickChanges();
+                            /*if (hits[i].transform.gameObject != selectedUnit)*/ LastSelectedUnit = selectedUnit;
+                            selectedUnit = hits[i].transform.gameObject;
 
-                        if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
-                        selectionHighlighter.transform.position = selectedUnit.transform.position;
+                            canvasComponents.OnClickChanges();
+                            if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
+                            selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(242f / 255f, 211f / 255f, 171f / 255f, 255f / 255f);
+                            Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                            //if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+
+                            break;
+                        case 9: // Tile
+
+                            /*if (hits[i].transform.gameObject != selectedUnit)*/ LastSelectedUnit = selectedUnit;
+                            selectedUnit = hits[i].transform.gameObject;
+
+                            if (hits[i].transform.parent == buildingsTM.transform)
+                            {
+
+                                //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
+                                //if (interactable == null) return;
+                                //interactable.Interact();
+
+                                canvasComponents.OnClickChanges();
+
+                                if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
+                                selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(251f / 255f, 245f / 255f, 255f / 255f, 255f / 255f);
+                                Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                            }
+
+                            break;
+                        case 10: // Ground
+
+                            /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/ LastSelectedUnit = selectedUnit;
+                            selectedUnit = null;
+
+                            canvasComponents.OnClickChanges();
+
+                            if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+                            Debug.Log("Ground has been hit");
+
+                            break;
                     }
+                    break;
                 }
 
                 // LMB - Down -> Build One Tile
-                if (selectedTileToBuild)
+                if (selectedTileToBuild && hits[i])   // Attempt to Build
                 {
-                    if (hits[i])
+                    switch (hits[i].transform.gameObject.layer)
                     {
-                        Debug.Log("I can't build there");
-                    }
+                        case 8: // Entity
 
-                    if (!hits[i])
-                    {
-                        Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity);
-                        //buildingsTilemap.SetTile(cellPosition, selectedTileToBuild);
-                        //Instantiate(SelectedObjToInstantiate, clickPosition, Quaternion.identity);
-                        mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
-                        selectedTileToBuild = null;
+                            
+
+                            break;
+                        case 9: // Tile
+
+                                Debug.Log("Can't Build there,\n\r hit " + hits[i].transform.gameObject.name);
+
+                            break;
+                        case 10: // Ground
+
+                            Debug.Log("Build,\n\r hit " + hits[i].transform.gameObject.name);
+                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+                            mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
+                            selectedTileToBuild = null;
+
+                            break;
                     }
+                    break;
                 }
             }
+            return;
         }
+
 
         // Right-MouseClick -> Remove Existing Tile
         if (Input.GetMouseButtonDown(1))
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
             for (int i = 0; i < hits.Length; i++)
             {
-                if (hits[i] && hits[i].transform.gameObject.layer == 9) // Is it a tile
+                switch (hits[i].transform.gameObject.layer)
                 {
-                    Destroy(hits[i].transform.gameObject);
-                    break;
+                    case 8: // Entity
+                        break;
+                    case 9: // Tile
+
+                        Destroy(hits[i].transform.gameObject);
+
+                        break;
+                    case 10: // Ground
+                        break;
                 }
+                break;
             }
+            return;
         }
-
-
-        //RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-        //    if (hits[i].transform.parent == buildingsTilemap.transform)
-        //    {
-        //        Debug.LogError(hits[i].transform.name);
-        //    }
-
-        //    //if (hits[i].transform.parent == )
-        //    //{
-
-        //    //}
-        //}
-        
-
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-        //    switch (hits[i].transform.gameObject.layer)
-        //    {
-        //        case 5:
-        //            break; // UI
-
-        //        case 8:
-        //            break; // Entity
-
-        //        case 9:
-        //            break; // Building
-
-        //        default:
-        //            break;
-        //    }
-
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        if (hits[i].transform.GetComponent<Harvestable>())
-        //        {
-
-        //        }
-        //    }
-
-        //    if (hits[i].collider.name != "Ground")
-        //    {
-
-        //    }
-
-        //    Debug.Log(hits[i].collider.name);
-        //}
-
-            
-
     }
 }
 
-//if (Input.GetMouseButton(0))
-//{
-//    // Future Feature... DRAG Click to select multiple
-//}
+/*if (Input.GetMouseButton(0))
+{
+    Future Feature... DRAG Click to select multiple
+
+    // Interesting to remember that... buildingsTilemap.HasTile(cellPosition) == true
+
+}
+*/

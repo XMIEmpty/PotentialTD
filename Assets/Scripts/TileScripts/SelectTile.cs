@@ -13,33 +13,13 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class SelectTile : MonoBehaviour
 {
-    public TileHandling tilesHandler;
+    private TileHandling tilesHandler;
 
 
     private void Start()
     {
         tilesHandler = GetComponent<TileHandling>();
     }
-
-
-    ///// <summary>
-    ///// Runs thru containers in selected container file, runs thru all container itemlists and returns item which's name  containt ths containsInName
-    ///// </summary>
-    //private RuleTileSiblings GetRuleTileSibling(string containsInName)
-    //{
-    //    for (int i = 0; i < tilesHandler.tilesContainer.containers.Length; i++)
-    //    {
-    //        for (int j = 0; j < tilesHandler.tilesContainer.containers[i].categoryItems.Length; j++)
-    //        {
-    //            if (tilesHandler.tilesContainer.containers[i].categoryItems[j].name.Equals(containsInName))
-    //            {
-    //                return tilesHandler.tilesContainer.containers[i].categoryItems[j];
-    //            }
-    //        }
-    //    }
-    //    return null;
-    //}
-
 
 
     private GameObject GetPrefabTile(string containsInName)
@@ -58,18 +38,6 @@ public class SelectTile : MonoBehaviour
     }
 
 
-
-    ///// <summary>
-    ///// Uses the GetRuleTileSibling to get the tile & uses it's values to change the selection
-    ///// </summary>
-    //private void GetAndProcessTile(string containsInName)
-    //{
-    //    RuleTileSiblings foundTile = GetRuleTileSibling(containsInName);
-    //    tilesHandler.selectedTileToBuild = foundTile;
-    //    tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.m_DefaultSprite;
-    //}
-
-
     private void GetAndProcessPrefabData(string containsInName)
     {
         GameObject foundTile = GetPrefabTile(containsInName);
@@ -85,10 +53,10 @@ public class SelectTile : MonoBehaviour
     public void GetGate() => GetAndProcessPrefabData("Gate");
 
 
-    public void GetTileByName(string tileName) => GetAndProcessPrefabData(tileName);
-    //{
-    //    GetComponent<TileHandling>().selectedTile = gate;
-    //    GetComponent<TileHandling>().tileSelectioning.
-    //        GetComponent<SpriteRenderer>().sprite = gate.m_DefaultSprite;
-    //}
+    //public void GetTileByName(string tileName) => GetAndProcessPrefabData(tileName);
+    ////{
+    ////    GetComponent<TileHandling>().selectedTile = gate;
+    ////    GetComponent<TileHandling>().tileSelectioning.
+    ////        GetComponent<SpriteRenderer>().sprite = gate.m_DefaultSprite;
+    ////}
 }

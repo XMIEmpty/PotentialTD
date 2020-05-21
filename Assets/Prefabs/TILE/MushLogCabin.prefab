@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4554551470595944256}
-  - component: {fileID: 1417635524557508778}
+  - component: {fileID: 4554551470595944271}
   - component: {fileID: 4554551470595944270}
-  - component: {fileID: 4173829843260596345}
+  - component: {fileID: 1378580535173815457}
+  - component: {fileID: 1108654449594359225}
   m_Layer: 9
-  m_Name: Gate
+  m_Name: MushLogCabin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1417635524557508778
+--- !u!212 &4554551470595944271
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,8 +72,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_SortingOrder: 16
+  m_Sprite: {fileID: -8637159173488095169, guid: 44b42b7e904832f45b4fa1a4aa92a311,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,7 +82,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &4554551470595944270
@@ -93,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -109,7 +111,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4173829843260596345
+--- !u!95 &1378580535173815457
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554551470595944269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1108654449594359225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +139,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 4554551470595944269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eddb8c0c586c4742803f0e7388310a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f7b718d21b412649a771da956abf5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  isOpen: 0
-  tileHandler: {fileID: 0}
+  buildingTag: 
+  isAvailable: 0
+  tileName: MushLogCabin
+  currentUpgradeLevel: 0
+  UL_Text: UP LEFT
+  UR_Text: UP RIGHT
+  DL_Text: DOWN LEFT
+  DR_Text: DOWN RIGHT
+  soulsCosts: 5
+  mushLogCosts: 5
+  hungerCosts: 1
+  maxHealth: 10
+  currentHealth: 0
+  armor: 0
+  canAttack: 0
+  damage: 0
+  attackSpeed: 0.01
+  attackRange: 0.01
+  canUpgrade: 0
+  upgrade:
+  - newTileName: NewerBuilding
+    soulsCosts: 10
+    mushLogCosts: 5
+    hungerCosts: 2
+    newMaxHealth: 0
+    newArmor: 2
+    canAttack: 1
+    newDamage: 1
+    newAttackSpeed: 1
+    newAttackRange: 3
+  animator: {fileID: 0}
+  tileHandling: {fileID: 0}
+  Upgrade_Button: {fileID: 0}
+  AttackButton: {fileID: 0}
+  Name: {fileID: 0}
+  UL_Button_Text: {fileID: 0}
+  UR_Button_Text: {fileID: 0}
+  DL_Button_Text: {fileID: 0}
+  DR_Button_Text: {fileID: 0}

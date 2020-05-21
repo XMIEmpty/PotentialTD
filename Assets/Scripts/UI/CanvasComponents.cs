@@ -104,24 +104,104 @@ public class CanvasComponents : MonoBehaviour
 
     public void OnClickChanges()
     {
-        if (tileHandling.selectedUnit != null &&
-            tileHandling.LastSelectedUnit != null &&
-            tileHandling.selectedUnit.layer == tileHandling.LastSelectedUnit.layer) return;
+        //if (tileHandling.selectedUnit != null &&
+        //    tileHandling.LastSelectedUnit != null &&
+        //    tileHandling.selectedUnit.layer == tileHandling.LastSelectedUnit.layer) return;
 
-        switch (tileHandling.selectedUnit.layer)
+        //if (tileHandling.selectedTileToBuild != null)
+        //{
+        //    switch (tileHandling.LastSelectedUnit.layer || tileHandling.selectedUnit.layer)
+        //    {
+        //        case 8: // Entity
+
+        //            Debug.Log("Closing Controller Entity");
+        //            entityController.GetComponent<Animator>().SetTrigger("Close_EntityController");
+
+        //            break;
+        //        case 9: // Tile
+
+        //            Debug.Log("Closing Controller Tile");
+        //            tileController.GetComponent<Animator>().SetTrigger("Close_TileController");
+
+
+        //            break;
+        //    }
+        //}
+
+        if (tileHandling.selectedTileToBuild == null)
         {
-            case 8: // Entity
-                Debug.Log("Switching To Entity");
-                // Animator Trigger Close TileController
-                // Animator Trigger Open EntityController
-                break;
+            if (tileHandling.selectedUnit == null) // When ground Selected
+            {
+                Debug.Log("selectedUnit == null");
+                if (tileHandling.LastSelectedUnit != null)
+                {
+                    switch (tileHandling.LastSelectedUnit.layer)
+                    {
+                        case 8: // Entity
+
+                            //Debug.Log("Closing Controller Entity");
+                            entityController.GetComponent<Animator>().SetTrigger("Close_EntityController");
+
+                            break;
+                        case 9: // Tile
+
+                            //Debug.Log("Closing Controller Tile");
+                            tileController.GetComponent<Animator>().SetTrigger("Close_TileController");
 
 
-            case 9: // Tile
-                Debug.Log("Switching To Tile");
-                // Animator Trigger Open TileController
-                // Animator Trigger Close EntityController
-                break;
+                            break;
+                    }
+                }
+                return;
+            }
+
+            if (tileHandling.selectedUnit)
+            {
+                switch (tileHandling.selectedUnit.layer) // When Entity Or Tile Selected
+                {
+                    case 8: // Entity
+
+                        if (tileHandling.LastSelectedUnit == null)
+                        {
+                            //Debug.Log("Opening Controller Entity");
+                            entityController.GetComponent<Animator>().SetTrigger("Open_EntityController"); // Animator Trigger Open EntityController
+                            return;
+                        }
+                        if (tileHandling.LastSelectedUnit.layer == 9) // Tile
+                        {
+                            //Debug.Log("Switching from Tile To Entity");
+                            tileController.GetComponent<Animator>().SetTrigger("Close_TileController"); // Animator Trigger Close TileController
+                            entityController.GetComponent<Animator>().SetTrigger("Open_EntityController"); // Animator Trigger Open EntityController
+                        }
+                        if (tileHandling.LastSelectedUnit.layer == 8) // Entity
+                        {
+                            //Debug.Log("Remaining on Entity");
+                        }
+
+                        break;
+                    case 9: // Tile
+
+                        if (tileHandling.LastSelectedUnit == null)
+                        {
+                            //Debug.Log("Opening Controller Tile");
+                            tileController.GetComponent<Animator>().SetTrigger("Open_TileController"); // Animator Trigger Open TileController
+                            return;
+                        }
+                        if (tileHandling.LastSelectedUnit.layer == 8)  // Entity
+                        {
+                            //Debug.Log("Switching from Entity To Tile");
+                            tileController.GetComponent<Animator>().SetTrigger("Open_TileController"); // Animator Trigger Open TileController
+                            entityController.GetComponent<Animator>().SetTrigger("Close_EntityController"); // Animator Trigger Close EntityController
+                        }
+                        if (tileHandling.LastSelectedUnit.layer == 9) // Tile
+                        {
+                            //Debug.Log("Remaining on Entity");
+                        }
+                        //tileUpgrade_Button.onClick.AddListener(tileHandling.selectedUnit.GetComponent<A_Building>().action_Upgrade);
+
+                        break;
+                }
+            }
         }
     }
 
@@ -140,7 +220,7 @@ public class CanvasComponents : MonoBehaviour
 
 
             case 9: // Tile
-                Debug.Log("It's a Tile");
+                Debug.Log("It's a Tileas");
 
                 break;
         }
