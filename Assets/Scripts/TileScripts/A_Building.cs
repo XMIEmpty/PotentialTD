@@ -9,17 +9,22 @@ public class A_Building : MonoBehaviour, IInteractable
     [HideInInspector] public string buildingTag;
     [HideInInspector] public bool isAvailable;
 
+    [Header("Necessary")]
+    public Button.ButtonClickedEvent getMe;
+
     [Header("Profile")]
     [Space(15)]
     public string tileName = "NewBuilding";
     public int currentUpgradeLevel = 0;
+    [TextArea]
+    public string InfoBox;
     public string UL_Text, UR_Text, DL_Text, DR_Text;
 
     [Header("BuildCosts")]
     [Space(15)]
-    public int soulsCosts = 5;
+    public int soulCosts = 5;
     public int mushLogCosts = 5;
-    public int hungerCosts = 1;
+    public int foodCosts = 1;
 
     [Header("DefaultAttibutes")]
     [Space(15)]
@@ -102,9 +107,9 @@ public class A_Building : MonoBehaviour, IInteractable
 
         tileName = upgrade[currentUpgradeLevel].newTileName;
 
-        soulsCosts = upgrade[currentUpgradeLevel].soulsCosts;
+        soulCosts = upgrade[currentUpgradeLevel].soulsCosts;
         mushLogCosts = upgrade[currentUpgradeLevel].mushLogCosts;
-        hungerCosts = upgrade[currentUpgradeLevel].hungerCosts;
+        foodCosts = upgrade[currentUpgradeLevel].hungerCosts;
 
         maxHealth = upgrade[currentUpgradeLevel].newMaxHealth;
         currentHealth = maxHealth;

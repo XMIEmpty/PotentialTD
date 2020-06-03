@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05ae0d20aabe2f34bbc649c8b4d35343, type: 3}
-  m_Name: _PrefabTileContainer
+  m_Name: Buildings_PrefabTileContainer
   m_EditorClassIdentifier: 
   containers:
   - containerName: Buildings

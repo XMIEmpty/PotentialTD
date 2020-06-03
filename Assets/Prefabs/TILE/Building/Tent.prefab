@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -146,13 +146,14 @@ MonoBehaviour:
   isAvailable: 0
   tileName: Tent
   currentUpgradeLevel: 0
+  InfoBox: 
   UL_Text: 
   UR_Text: 
   DL_Text: 
   DR_Text: 
-  soulsCosts: 5
+  soulCosts: 5
   mushLogCosts: 5
-  hungerCosts: 1
+  foodCosts: 1
   maxHealth: 10
   currentHealth: 0
   armor: 0
@@ -163,11 +164,7 @@ MonoBehaviour:
   canUpgrade: 0
   upgrade: []
   animator: {fileID: 0}
+  upgradeEvent:
+    m_PersistentCalls:
+      m_Calls: []
   tileHandling: {fileID: 0}
-  Upgrade_Button: {fileID: 0}
-  AttackButton: {fileID: 0}
-  Name: {fileID: 0}
-  UL_Button_Text: {fileID: 0}
-  UR_Button_Text: {fileID: 0}
-  DL_Button_Text: {fileID: 0}
-  DR_Button_Text: {fileID: 0}

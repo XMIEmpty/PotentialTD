@@ -22,7 +22,7 @@ public class SelectTile : MonoBehaviour
     }
 
 
-    private GameObject GetPrefabTile(string containsInName)
+    public GameObject GetPrefabTile(string containsInName)
     {
         for (int i = 0; i < tilesHandler.prefabTileContainer.containers.Length; i++)
         {
@@ -38,7 +38,7 @@ public class SelectTile : MonoBehaviour
     }
 
 
-    private void GetAndProcessPrefabData(string containsInName)
+    public void GetAndProcessPrefabData(string containsInName)
     {
         GameObject foundTile = GetPrefabTile(containsInName);
         tilesHandler.selectedTileToBuild = foundTile;
@@ -46,11 +46,46 @@ public class SelectTile : MonoBehaviour
     }
 
 
-    public void GetTent() => GetAndProcessPrefabData("Tent");
-    public void GetMushLogCabin() => GetAndProcessPrefabData("MushLogCabin");
-    public void GetFarm() => GetAndProcessPrefabData("Farm");
-    public void GetWall() => GetAndProcessPrefabData("Wall");
-    public void GetGate() => GetAndProcessPrefabData("Gate");
+    public void GetAndProcessPrefabInfo(string containsInName)
+    {
+        GameObject foundTile = GetPrefabTile(containsInName);
+        A_Building a_Building = foundTile.GetComponent<A_Building>();
+        tilesHandler.canvasComponents.infoBoxText.text = a_Building.InfoBox;
+        tilesHandler.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Open_InfoBox");
+
+        // Set Costs Values and Open that as well
+        SetCosts(a_Building);
+        tilesHandler.canvasComponents.costsBoxGo.SetActive(true);
+    }
+
+
+    public void SetCosts(A_Building a_Building)
+    {
+        tilesHandler.canvasComponents.mushLogCostsText.text = a_Building.mushLogCosts.ToString();
+        tilesHandler.canvasComponents.soulCostsText.text = a_Building.soulCosts.ToString();
+        tilesHandler.canvasComponents.foodCostsText.text = a_Building.foodCosts.ToString();
+    }
+
+
+    public void EmptyAndClosePrefabInfo()
+    {
+        tilesHandler.canvasComponents.infoBoxText.text = "";
+        tilesHandler.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Close_InfoBox");
+        // Empty Costs Values and Close that as well
+        tilesHandler.canvasComponents.costsBoxGo.SetActive(false);
+    }
+
+
+    public void GetTent() => GetAndProcessPrefabData("Tent"); public void GetTent_InfoCosts() => GetAndProcessPrefabInfo("Tent");
+
+    public void GetMushLogCabin() => GetAndProcessPrefabData("MushLogCabin"); public void GetMushLogCabin_InfoCosts() => GetAndProcessPrefabInfo("MushLogCabin");
+
+    public void GetFarm() => GetAndProcessPrefabData("Farm"); public void GetFarm_InfoCosts() => GetAndProcessPrefabInfo("Farm");
+
+    public void GetWall() => GetAndProcessPrefabData("Wall"); public void GetWall_InfoCosts() => GetAndProcessPrefabInfo("Wall");
+
+    public void GetGate() => GetAndProcessPrefabData("Gate"); public void GetGate_InfoCosts() => GetAndProcessPrefabInfo("Gate");
+
 
 
     //public void GetTileByName(string tileName) => GetAndProcessPrefabData(tileName);

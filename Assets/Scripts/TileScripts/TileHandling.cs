@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 
 public class TileHandling : MonoBehaviour
@@ -10,14 +11,15 @@ public class TileHandling : MonoBehaviour
     [SerializeField]
     Grid grid;
     public CanvasComponents canvasComponents;
-    public List<Tilemap> alltilemaps;
 
     private Vector3Int cellPosition;
 
     public TilesContainer tilesContainer;
+    public SelectTile selectTile;
     public PrefabTileContainer prefabTileContainer;
 
-    public Sprite defaultTileHighlighter;
+
+    [SerializeField] private Sprite defaultTileHighlighter;
     public GameObject selectedTileToBuild;
     public GameObject buildingsTM, plantsTM, wallsTM, groundsTM;
 
@@ -33,8 +35,15 @@ public class TileHandling : MonoBehaviour
 
     public GameObject[] selectedUnits, LastSelectedUnits;
 
+
+    int x = Screen.width / 2;
+    int y = Screen.height / 2;
+
+
     void Awake()
     {
+        selectTile = GetComponent<SelectTile>();
+
         grid = FindObjectOfType<Grid>();
         buildingsTM = grid.transform.Find("Buildings").gameObject;
         plantsTM = grid.transform.Find("Plants").gameObject;
@@ -53,6 +62,9 @@ public class TileHandling : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) // DON'T CONTINUE IF MOUSE OVER (G)UI 
         {
             mouseTileHighlighter.SetActive(false);
+            //EventSystem.current.currentSelectedGameObject.GetComponent<sdasdasd0>();
+
+
             return;
         }
 
@@ -60,7 +72,6 @@ public class TileHandling : MonoBehaviour
         if (!mouseTileHighlighter.activeInHierarchy) mouseTileHighlighter.SetActive(true);
         mouseTileHighlighter.transform.position = grid.GetCellCenterLocal(cellPosition);
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(clickPosition, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(clickPosition, Vector2.zero);
 
 
@@ -124,7 +135,7 @@ public class TileHandling : MonoBehaviour
                         canvasComponents.OnClickChanges();
                         if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
                         selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(242f / 255f, 211f / 255f, 171f / 255f, 255f / 255f);
-                        Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                        //Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
                         //if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
 
                         break;
@@ -140,12 +151,12 @@ public class TileHandling : MonoBehaviour
                             //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
                             //if (interactable == null) return;
                             //interactable.Interact();
-
+                            canvasComponents.tileActionControlGuiScript.CreateButtonList();
                             canvasComponents.OnClickChanges();
 
                             if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
                             selectionHighlighter.GetComponent<SpriteRenderer>().color = new Color(251f / 255f, 245f / 255f, 255f / 255f, 255f / 255f);
-                            Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                            //Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
                         }
 
                         break;

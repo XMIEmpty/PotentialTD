@@ -1,22 +1,59 @@
-﻿using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Gate : MonoBehaviour, IInteractable
+public class Gate : MonoBehaviour, IInteractable, IPassMethods
 {
-    public int health;
+    public bool isOpen = false;
+    private A_Building a_Building;
+    private Action action1, action2, action3, action4; 
 
-    public bool isOpen;
-
-    [SerializeField]
-    private TileHandling tileHandler;
-
-
-    void Start()
+    private void Start()
     {
-        tileHandler = GameObject.Find("GameManager").GetComponent<TileHandling>();
-        //isOpen = false;
-        Debug.LogError("Start  " + tileHandler);
-        
+        if (TryGetComponent<A_Building>(out A_Building buildingFound)) a_Building = buildingFound;
+        if (a_Building.animator)
+        {
+
+        }
+    }
+
+
+    private void Update() // Use to run constant processes etc. that have been activated or changed based on actions taken etc.
+    { 
+        // If this condition case is true do this process etc.
+    }
+
+
+    public Action PassMethods(int methodNum)
+    {
+        //ToggleGate();
+
+        switch (methodNum)
+        {
+            case 1: ToggleGate();
+
+
+
+                break;
+            case 2:
+                
+                
+
+                break;
+            case 3: 
+                
+                
+                
+                break;
+            case 4: 
+                
+                
+                
+                break;
+        }
+
+        return null;
     }
 
 
@@ -26,65 +63,26 @@ public class Gate : MonoBehaviour, IInteractable
     }
 
 
-    //public void Switch()
-    //{
-    //    var tilePos = tileHandler.cellPosition;
-
-    //    if (isOpen /*&& tile != null*/)
-    //    {
-    //        Debug.LogError(closedGate.name);
-    //        tileHandler.buildingsTilemap.SetTile(tilePos, closedGate);
-
-    //        isOpen = false;
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError(openedGate.name);
-    //        tileHandler.buildingsTilemap.SetTile(tilePos, openedGate);
-
-    //        isOpen = true;
-    //    }
+    public Action CurrentAction1() { return action1; }
+    public Action CurrentAction2() { return action2; }
+    public Action CurrentAction3() { return action3; }
+    public Action CurrentAction4() { return action4; }
 
 
-        //if (currentTile != null && !currentTile.name.Equals("Gate") /*&& tile != null*/)
-        //{
-        //    //Debug.LogError("ClosedGateTile: BEFORE SET " + currentTile.name);
-        //    currentTile = tileHandler.tilesContainer.GetTile("Gate");
+    // Toggles Gate to Open or Closed
+    public void ToggleGate()
+    {
+        if (isOpen)
+        {
+            // Close gate
+        }
+        else
+        {
+            // Open Gate
+        }
 
-        //    GetComponent<Tilemap>().SetTile(tilePos, currentTile);
-        //    //tileHandler.buildingsTilemap.SetTile(tilePos, currentTile);
-        //    //Debug.LogError("ClosedGateTile: AFTER SET " + currentTile.name);
-        //    //Instantiate(particleSpawned, transform.position + new Vector3(0f, 3f, 0f), Quaternion.identity);
+        isOpen = !isOpen;
+    }
 
-        //    isOpen = false;
-        //}
-        //else
-        //{
-        //    //if (currentTile) Debug.LogError("OpenGateTile: Before SET " + currentTile.name);
-        //    currentTile = tileHandler.tilesContainer.GetTile("OpenGate");
 
-        //    GetComponent<Tilemap>().SetTile(tilePos, currentTile);
-        //    //tileHandler.buildingsTilemap.SetTile(tilePos, currentTile);
-        //    //Debug.LogError("OpenGateTile: AFTER SET " + currentTile.name);
-        //    //Instantiate(particleSpawned, transform.position, Quaternion.identity);
-
-        //    isOpen = true;
-        //}
-
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition);
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(1, 1, 0)); // Top Left
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(0, 1, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(-1, 1, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(1, 0, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(-1, 0, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(-1, -1, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(0, -1, 0));
-        //tileHandler.buildingsTilemap.RefreshTile(tileHandler.cellPosition + new Vector3Int(-1, -1, 0)); // Buttom Right
-    //}
 }
-
-//{
-//TileBase tile = tileHandler.buildingsTilemap.GetTile(tilePos);
-//var somethin = tileHandler.buildingsTilemap.SetTile(tileHandler.cellPosition, tileHandler.tilesContainer.GetTile("Gate"));
-//Vector3Int tilePos = tileHandler.buildingsTilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-//}
