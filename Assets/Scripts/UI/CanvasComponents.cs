@@ -19,6 +19,7 @@ public class CanvasComponents : MonoBehaviour
     public Button tileUpgradeButton, tileRepairButton, tileCancelButton, tileAttackButton;
     public Button tileUlButton, tileUrButton, tileDlButton, tileDrButton;
     public Text tileUlText, tileUrText, tileDlText, tileDrText;
+    public GameObject tileActionsMenu, tileViewport, tileContent;
 
 
     [Header("Entity Controller Section")] public GameObject entityController;
@@ -30,6 +31,7 @@ public class CanvasComponents : MonoBehaviour
     public Button entityAboutButton;
     public Button entityAction1Button, entityAction2Button, entityAction3Button, entityAction4Button;
     public Text entityAction1Text, entityAction2Text, entityAction3Text, entityAction4Text;
+    public GameObject entityActionsMenu, entityViewport, entityContent;
 
     [Header("Resource Bar Section")] public GameObject resourceBar;
     public Button menuButton;
@@ -37,6 +39,12 @@ public class CanvasComponents : MonoBehaviour
     public Text mushLogText, soulsText, foodText;
 
     [Header("Tile Building Bar Section")] public GameObject tileBuilder;
+    public Image buildBarBgImage;
+    public Image buildBarBuildButtonBgImage;
+    public Button buildBarBuildButtonButton;
+    public GameObject buildBarMainButtonsGo;
+    public Button buildBarLeftArrowButton, buildBarRightArrowButton;
+    public GameObject buildBarBuildingsMenu, buildBarViewport, buildBarContent;
 
     [Header("List Scripts")] public EntityActionControlGUI entityActionControlGuiScript;
     public TileActionControlGUI tileActionControlGuiScript;
@@ -99,6 +107,9 @@ public class CanvasComponents : MonoBehaviour
         tileUrText = tileUrButton.transform.Find("Text").GetComponent<Text>();
         tileDlText = tileDlButton.transform.Find("Text").GetComponent<Text>();
         tileDrText = tileDrButton.transform.Find("Text").GetComponent<Text>();
+        tileActionsMenu = tileController.transform.Find("ActionsMenu").gameObject;
+        tileViewport = tileActionsMenu.transform.Find("Viewport").gameObject;
+        tileContent = tileViewport.transform.Find("Content").gameObject;
 
         entityController = transform.Find("EntityController").gameObject;
         entityPortraitImage = entityController.transform.Find("Portrait").GetComponent<Image>();
@@ -119,6 +130,9 @@ public class CanvasComponents : MonoBehaviour
         entityAction2Text = entityAction2Button.transform.Find("Text").GetComponent<Text>();
         entityAction3Text = entityAction3Button.transform.Find("Text").GetComponent<Text>();
         entityAction4Text = entityAction4Button.transform.Find("Text").GetComponent<Text>();
+        entityActionsMenu = entityController.transform.Find("ActionsMenu").gameObject;
+        entityViewport = entityActionsMenu.transform.Find("Viewport").gameObject;
+        entityContent = entityViewport.transform.Find("Content").gameObject;
 
         resourceBar = transform.Find("ResourcesBar").gameObject;
         menuButton = resourceBar.transform.Find("Menu_Button").GetComponent<Button>();
@@ -130,11 +144,19 @@ public class CanvasComponents : MonoBehaviour
         foodText = foodButton.transform.Find("Text").GetComponent<Text>();
 
         tileBuilder = transform.Find("TileBuilder").gameObject;
-
-        entityActionControlGuiScript =
-            entityController.transform.Find("ActionsMenu").GetComponent<EntityActionControlGUI>();
-        tileActionControlGuiScript = tileController.transform.Find("ActionsMenu").GetComponent<TileActionControlGUI>();
-        buildsBarControlGuiScript = tileBuilder.transform.Find("BuildingsMenu").GetComponent<BuildsBarControlGUI>();
+        buildBarBgImage = tileBuilder.transform.Find("BuildsBar").GetComponent<Image>();
+        buildBarBuildButtonBgImage = tileBuilder.transform.Find("Build_Button_Box").GetComponent<Image>();
+        buildBarBuildButtonButton = buildBarBuildButtonBgImage.transform.Find("Build_Button").GetComponent<Button>();
+        buildBarMainButtonsGo = tileBuilder.transform.Find("Buttons").gameObject;
+        buildBarLeftArrowButton = buildBarMainButtonsGo.transform.Find("L_Arrow").GetComponent<Button>();
+        buildBarRightArrowButton = buildBarMainButtonsGo.transform.Find("R_Arrow").GetComponent<Button>();
+        buildBarBuildingsMenu = tileBuilder.transform.Find("BuildingsMenu").gameObject;
+        buildBarViewport = buildBarBuildingsMenu.transform.Find("Viewport").gameObject;
+        buildBarContent = buildBarViewport.transform.Find("Content").gameObject;
+        
+        entityActionControlGuiScript = entityActionsMenu.GetComponent<EntityActionControlGUI>();
+        tileActionControlGuiScript = tileActionsMenu.GetComponent<TileActionControlGUI>();
+        buildsBarControlGuiScript = buildBarBuildingsMenu.GetComponent<BuildsBarControlGUI>();
     }
 
 

@@ -5,5 +5,7 @@ using UnityEngine;
 
 public interface IPassMethods
 {
-    Action PassMethods(int methodNum);
+    string PassMethodName(int methodNum);
+
+    string GetScriptName();
 }

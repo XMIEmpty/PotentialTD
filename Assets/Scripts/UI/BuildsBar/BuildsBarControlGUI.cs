@@ -1,66 +1,85 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BuildsBarControlGUI : MonoBehaviour
 {
-    [SerializeField] private TileHandling tilesHandler;
+    private TileHandling m_tilesHandler;
     [SerializeField] private GameObject buttonTemplate;
     [SerializeField] private GridLayoutGroup gridGroup;
 
-    private List<ActionItem> ActionInventory;
-    private List<GameObject> buttons;
+    private List<ActionItem> m_ActionInventory;
+    // private TileHandling m_TileHandling;
 
 
     private void Start()
     {
-        tilesHandler = GameObject.Find("GameManager").GetComponent<TileHandling>();
-        buttons = new List<GameObject>();
-        ActionInventory = new List<ActionItem>();
+        m_tilesHandler = GameObject.Find("GameManager").GetComponent<TileHandling>();
+    }
 
-        for (int i = 0; i < tilesHandler.prefabTileContainer.containers.Length; i++)
+
+    private void Update()
+    {
+        StartsIs();
+    }
+
+
+    private void StartsIs()
+    {
+        if (!Input.GetKeyDown(KeyCode.O)) return;
+        m_ActionInventory = new List<ActionItem>();
+
+        for (var i = m_tilesHandler.prefabTileContainer.containers.Length - 1; i >= 0; i--)
         {
-            for (int j = 0; j < tilesHandler.prefabTileContainer.containers[i].containerItems.Length; j++)
-            {// Run thru all items in containers
-                ActionItem newItem = new ActionItem();
-                newItem.tilePrefab = tilesHandler.prefabTileContainer.containers[i].containerItems[j]; // Pass prefab
-                ActionInventory.Add(newItem);
+            for (var j = m_tilesHandler.prefabTileContainer.containers[i].containerItems.Length - 1; j >= 0; j--)
+            {
+                // Run thru all items in containers
+                var newItem = new ActionItem
+                {
+                    TilePrefab = m_tilesHandler.prefabTileContainer.containers[i].containerItems[j] // Pass prefab
+                };
+                m_ActionInventory.Add(newItem);
             }
         }
+
         GenInventory();
     }
 
 
     void GenInventory()
-    {
-        if (buttons.Count > 0) // Destroy Old List
+    {    
+        // If there are more children to (GameObject)Content except the first one
+        if (buttonTemplate.transform.parent.childCount > 1) // Destroy Old List
         {
-            foreach (GameObject button in buttons) Destroy(button.gameObject);
-            buttons.Clear();
+            // Run thru all children of (GameObject)Content except first the one
+            for (var index = buttonTemplate.transform.parent.childCount - 1; index >= 1; index--)
+            {
+                // Destroy the found child
+                Destroy(buttonTemplate.transform.parent.GetChild(index).gameObject);
+            }
         }
 
-        if (ActionInventory.Count < 11) gridGroup.constraintCount = ActionInventory.Count;
-        else gridGroup.constraintCount = 10; // Reset Contraint Bounds
+        gridGroup.constraintCount =
+            m_ActionInventory.Count < 11 ? m_ActionInventory.Count : 10; // Reset Constraint Bounds
 
-        foreach (ActionItem newItem in ActionInventory) // Go thru the list of all tile Prefabs found in ActionInventory List
+        
+        for (var index = m_ActionInventory.Count - 1; index >= 0; index--)
         {
-            GameObject newButton = Instantiate(buttonTemplate) as GameObject; // Make Button
+            var newItem = m_ActionInventory[index];
+            var newButton =
+                Instantiate(buttonTemplate, buttonTemplate.transform.parent,
+                    false); // Make Button, Set Proper Parenting, Pos
             newButton.SetActive(true);
-            BuildsBarButtonGUI buildsBarButton = newButton.GetComponent<BuildsBarButtonGUI>();
 
-            buildsBarButton.SetTileProperties(newItem.tilePrefab); // Pass the Prefab in the Button Script
+            var buildsBarButton = newButton.GetComponent<BuildsBarButtonGUI>();
 
-            newButton.transform.SetParent(buttonTemplate.transform.parent, false); // Set Proper Parenting
-            buttons.Add(newButton);
+            buildsBarButton.SetTileProperties(newItem.TilePrefab); // Pass the Prefab in the Button Script
         }
     }
 
 
-    public class ActionItem
+    private class ActionItem
     {
-        public GameObject tilePrefab;
+        public GameObject TilePrefab;
     }
 }

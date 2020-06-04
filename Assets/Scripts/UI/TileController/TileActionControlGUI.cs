@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,75 +8,74 @@ public class TileActionControlGUI : MonoBehaviour
     [SerializeField] private TileHandling tilesHandler;
     [SerializeField] private GameObject buttonTemplate;
     [SerializeField] private GridLayoutGroup gridGroup;
-    [SerializeField] private Sprite[] iconSprites;
 
-
-    private List<ActionItem> ActionInventory;
-    [SerializeField]
-    private List<GameObject> buttons;
+    private List<ActionItem> m_ActionInventory;
 
 
     private void Awake()
     {
         tilesHandler = GameObject.Find("GameManager").GetComponent<TileHandling>();
-        buttons = new List<GameObject>();
-        ActionInventory = new List<ActionItem>();
     }
 
 
     public void CreateButtonList()
     {
-        Debug.Log("Creating TILE Button List");
-        for (int i = 0; i < 4; i++)
-        {
-            ActionItem newItem = new ActionItem();
-            newItem.iconSprite = iconSprites[UnityEngine.Random.Range(0, iconSprites.Length)];
-            var passMethod = tilesHandler.selectedUnit.GetComponent<IPassMethods>();
-            if (passMethod != null) newItem.action = passMethod.PassMethods(i);
+        if (!tilesHandler.selectedUnit.TryGetComponent(out IPassMethods passMethod)) return;
 
-             // for every item call the passmethod(i);
-            ActionInventory.Add(newItem);
+        // Debug.Log(IPassMethods);
+
+        Debug.Log("Creating TILE Button List");
+        m_ActionInventory = new List<ActionItem>();
+
+        for (var i = 0; i < 4; i++)
+        {
+            if (string.IsNullOrEmpty(passMethod.PassMethodName(i))) continue;
+
+            var newItem = new ActionItem();
+            newItem.ScriptName = passMethod.GetScriptName();
+            newItem.ActionName = passMethod.PassMethodName(i);
+            // newItem.ActionNames.Add(passMethod.PassMethodName(i));
+            
+            m_ActionInventory.Add(newItem);
         }
 
         GenInventory();
     }
 
-    
-    void GenInventory()
+
+    private void GenInventory()
     {
-        if (buttons.Count > 0)
-        {
-            //for (int i = 0; i < buttons.Count; i++)
-            //{
-            //    Destroy(buttons[i]);
-            //    Debug.Log("Button Destroyed");
-            //}
-            foreach (GameObject button in buttons)
-            {
-                Destroy(button.gameObject);
-                Debug.Log("Button Destroyed");
+        if (tilesHandler.canvasComponents.tileContent.transform.childCount > 1) // Destroy Old List
+        {// If there are more children to (GameObject)Content except the first one
+            for (var index = tilesHandler.canvasComponents.tileContent.transform.childCount - 1; index >= 1; index--)
+            {// Run thru all children of (GameObject)Content except first the one
+                Destroy(tilesHandler.canvasComponents.tileContent.transform.GetChild(index).gameObject);
+                // Destroy the found child
             }
-            buttons.Clear();
-            Debug.Log(buttons.Count);
         }
 
-        if (ActionInventory.Count < 3) gridGroup.constraintCount = ActionInventory.Count;
-        else gridGroup.constraintCount = 2;
+        gridGroup.constraintCount =
+            m_ActionInventory.Count < 3 ? m_ActionInventory.Count : 2; // Reset Constraint Bounds 
 
-        foreach (ActionItem newItem in ActionInventory)
+        for (var index = m_ActionInventory.Count - 1; index >= 0; index--)
         {
-            GameObject newButton = Instantiate(buttonTemplate) as GameObject;
+            var newActionInvItem = m_ActionInventory[index];
+            var newButton =
+                Instantiate(buttonTemplate, buttonTemplate.transform.parent,
+                    false); // Make Button, Set Proper Parenting, Pos
             newButton.SetActive(true);
 
-            newButton.transform.SetParent(buttonTemplate.transform.parent, false);
-            buttons.Add(newButton.gameObject);
+            var tileActionButtonGui = newButton.GetComponent<TileActionButtonGUI>();
+
+            tileActionButtonGui.SetTileProperties(tilesHandler.selectedUnit, newActionInvItem.ScriptName, newActionInvItem.ActionName);
+            // 
         }
     }
 
 
-    public class ActionItem
+    private class ActionItem
     {
-        public Sprite iconSprite;
-        public Action action;
+        public string ScriptName;
+        public string ActionName;
     }
 }

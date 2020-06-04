@@ -1,72 +1,50 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour, IInteractable, IPassMethods
+public class Gate : MonoBehaviour, IPassMethods
 {
     public bool isOpen = false;
-    private A_Building a_Building;
-    private Action action1, action2, action3, action4; 
-
+    private A_Building m_ABuilding;
+    private Action action1, action2, action3, action4;
+    
+    
     private void Start()
     {
-        if (TryGetComponent<A_Building>(out A_Building buildingFound)) a_Building = buildingFound;
-        if (a_Building.animator)
-        {
-
-        }
+        if (!TryGetComponent<A_Building>(out var buildingFound)) return;
+        m_ABuilding = buildingFound;
     }
 
 
     private void Update() // Use to run constant processes etc. that have been activated or changed based on actions taken etc.
     { 
-        // If this condition case is true do this process etc.
+        //TODO: If this condition case is true do this process etc.
     }
 
 
-    public Action PassMethods(int methodNum)
+    public string PassMethodName(int methodNum)
     {
         //ToggleGate();
 
         switch (methodNum)
         {
-            case 1: ToggleGate();
-
-
-
-                break;
-            case 2:
-                
-                
-
-                break;
+            case 0:
+                return nameof(ToggleGate);
+            case 1:
+                return "";
+            case 2: 
+                return "";
             case 3: 
-                
-                
-                
-                break;
-            case 4: 
-                
-                
-                
-                break;
+                return "";
         }
 
         return null;
     }
 
-
-    public void Interact()
+    
+    public string GetScriptName()
     {
-        //Switch();
+        return this.GetType().Name;
     }
-
-
-    public Action CurrentAction1() { return action1; }
-    public Action CurrentAction2() { return action2; }
-    public Action CurrentAction3() { return action3; }
-    public Action CurrentAction4() { return action4; }
 
 
     // Toggles Gate to Open or Closed
@@ -75,10 +53,12 @@ public class Gate : MonoBehaviour, IInteractable, IPassMethods
         if (isOpen)
         {
             // Close gate
+            Debug.Log("Gate Closed");
         }
         else
         {
             // Open Gate
+            Debug.Log("Gate Opened");
         }
 
         isOpen = !isOpen;
