@@ -99,14 +99,6 @@ public class CanvasComponents : MonoBehaviour
         tileRepairButton = tileController.transform.Find("Repair_Button").GetComponent<Button>();
         tileCancelButton = tileController.transform.Find("Stop-Cancel_Button").GetComponent<Button>();
         tileAttackButton = tileController.transform.Find("Attack_Button").GetComponent<Button>();
-        tileUlButton = tileController.transform.Find("UL_Action_Button").GetComponent<Button>();
-        tileUrButton = tileController.transform.Find("UR_Action_Button").GetComponent<Button>();
-        tileDlButton = tileController.transform.Find("DL_Action_Button").GetComponent<Button>();
-        tileDrButton = tileController.transform.Find("DR_Action_Button").GetComponent<Button>();
-        tileUlText = tileUlButton.transform.Find("Text").GetComponent<Text>();
-        tileUrText = tileUrButton.transform.Find("Text").GetComponent<Text>();
-        tileDlText = tileDlButton.transform.Find("Text").GetComponent<Text>();
-        tileDrText = tileDrButton.transform.Find("Text").GetComponent<Text>();
         tileActionsMenu = tileController.transform.Find("ActionsMenu").gameObject;
         tileViewport = tileActionsMenu.transform.Find("Viewport").gameObject;
         tileContent = tileViewport.transform.Find("Content").gameObject;

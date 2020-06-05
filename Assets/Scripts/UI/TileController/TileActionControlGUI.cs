@@ -101,20 +101,20 @@ public class TileActionControlGUI : MonoBehaviour
 
         #region Action Names
         public string ClickActionName;
-        public string EnterctionName;
-        public string ExitActionName;
-        public string DownActionName;
-        public string UpActionName;
-        public string BeginDragActionName;
-        public string InitializePotentialDragActionName;
-        public string MoveActionName;
-        public string EndDragActionName;
-        public string DropActionName;
-        public string SelectActionName;
-        public string UpdateSelectedActionName;
-        public string DeselectActionName;
-        public string ScrollActionName;
-        public string CancelActionName;
+        // public string EnterctionName;
+        // public string ExitActionName;
+        // public string DownActionName;
+        // public string UpActionName;
+        // public string BeginDragActionName;
+        // public string InitializePotentialDragActionName;
+        // public string MoveActionName;
+        // public string EndDragActionName;
+        // public string DropActionName;
+        // public string SelectActionName;
+        // public string UpdateSelectedActionName;
+        // public string DeselectActionName;
+        // public string ScrollActionName;
+        // public string CancelActionName;
         #endregion
     }
 }
