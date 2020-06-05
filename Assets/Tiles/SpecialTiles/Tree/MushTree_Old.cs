@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MushTree : MonoBehaviour
+public class MushTree_Old : MonoBehaviour
 {
     public Animator characterAnimator;
 

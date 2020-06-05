@@ -32,14 +32,14 @@ public class ITreeChopping : MonoBehaviour, IState
             {
                 entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                if (entity.currWorkTime < entity.target.GetComponent<MushTree>().currHealth &&
+                if (entity.currWorkTime < entity.target.GetComponent<MushTree_Old>().currHealth &&
                     entity.currWorkTime < entity.maxWorkTime)
                     entity.currWorkTime += Time.deltaTime;
                 Debug.Log("Chop!");
                 if (entity.currWorkTime >= entity.maxWorkTime ||
-                    entity.currWorkTime >= entity.target.GetComponent<MushTree>().currHealth)
+                    entity.currWorkTime >= entity.target.GetComponent<MushTree_Old>().currHealth)
                 {
-                    entity.target.GetComponent<MushTree>().Harvest(Mathf.RoundToInt(entity.currWorkTime));
+                    entity.target.GetComponent<MushTree_Old>().Harvest(Mathf.RoundToInt(entity.currWorkTime));
                     GetClosestThing("Hall");
                     Debug.Log("NNN New Target acquired: " + entity.target.name + "\n\r location: " + entity.target.transform.position);
                     entity.returnHarvested = true;
@@ -60,7 +60,7 @@ public class ITreeChopping : MonoBehaviour, IState
             {
                 entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
                 // Instantiate returned  logs Particle
-                entity.target.GetComponent<Hall>().GetMushLogs(Mathf.RoundToInt(entity.currWorkTime));
+                entity.target.GetComponent<Hall_Old>().GetMushLogs(Mathf.RoundToInt(entity.currWorkTime));
                 entity.currWorkTime = 0;
                 entity.target = null;
                 entity.returnHarvested = false;

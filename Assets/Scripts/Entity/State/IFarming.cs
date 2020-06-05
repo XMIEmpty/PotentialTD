@@ -5,8 +5,8 @@ using UnityEngine;
 public class IFarming : MonoBehaviour, IState
 {
     private Entity entity;
-    private FertileLand currFertileLand;
-    private Hall currHall;
+    private FertileLand_Old m_CurrFertileLandOld;
+    private Hall_Old m_CurrHallOld;
 
     private Harvestable currHarvestable;
 
@@ -59,21 +59,21 @@ public class IFarming : MonoBehaviour, IState
                 if (entity.characterRB.velocity != new Vector2(0.0f, 0.0f)) // Velocity = 0
                     entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                if (entity.currWorkTime < currFertileLand.timeToHarvest &&
+                if (entity.currWorkTime < m_CurrFertileLandOld.timeToHarvest &&
                     entity.currWorkTime < entity.maxWorkTime) // Count Up Work Time
                     entity.currWorkTime += Time.deltaTime;
 
-                if (entity.currWorkTime >= currFertileLand.timeToHarvest ||
+                if (entity.currWorkTime >= m_CurrFertileLandOld.timeToHarvest ||
                     entity.currWorkTime >= entity.maxWorkTime)
                 {// Harvest Complete + Get Closest Hall + Return_Harvested Set True
-                    currFertileLand.Harvest(entity.currWorkTime);
+                    m_CurrFertileLandOld.Harvest(entity.currWorkTime);
 
                     if (entity.stateMethods.GetClosestThing(entity, "Hall"))
                     {
 
                     }
                     entity.target = entity.stateMethods.GetClosestThing(entity, "Hall");
-                    currHall = entity.buildings.mainHall;
+                    m_CurrHallOld = entity.buildings.mainHallOld;
                     //entity.buildings.allBuildings = entity.stateMethods.GetClosestBuilding(entity.);
                     Debug.Log("NNN New Target acquired: " + entity.target.name + "\n\r location: " + entity.target.transform.position);
                     entity.returnHarvested = true;
@@ -87,22 +87,22 @@ public class IFarming : MonoBehaviour, IState
 
         if (entity.goPlant == false && entity.returnHarvested == true)
         {
-            if (entity.stateMethods.GetTargetDistance(entity, currHall.transform.position) < 1f)
+            if (entity.stateMethods.GetTargetDistance(entity, m_CurrHallOld.transform.position) < 1f)
             {// Velocity Set 0 + Deliver Food + Set Current Work To 0 +
              // Return_Harvested Set False + Go_Plant Set True + currHall Set Null
                 if (entity.characterRB.velocity != new Vector2(0.0f, 0.0f)) // Velocity = 0
                     entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                currHall.GetFood(Mathf.RoundToInt(entity.currWorkTime));
+                m_CurrHallOld.GetFood(Mathf.RoundToInt(entity.currWorkTime));
                 entity.currWorkTime = 0;
                 entity.returnHarvested = false;
                 entity.goPlant = true;
-                currHall = null;
+                m_CurrHallOld = null;
             }
 
             if (entity.stateMethods.GetTargetDistance(entity, entity.targetPos) > 1f)
             {// Move Entity towards Target Position;
-                entity.stateMethods.MoveTo(entity, currHall.transform.position);
+                entity.stateMethods.MoveTo(entity, m_CurrHallOld.transform.position);
             }
         }
 
@@ -122,15 +122,15 @@ public class IFarming : MonoBehaviour, IState
                 if (entity.characterRB.velocity != new Vector2(0.0f, 0.0f)) // Velocity = 0
                     entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                if (entity.currWorkTime < currFertileLand.timeToPlant &&
+                if (entity.currWorkTime < m_CurrFertileLandOld.timeToPlant &&
                     entity.currWorkTime < entity.maxWorkTime)
                     entity.currWorkTime += Time.deltaTime;
 
-                if (entity.currWorkTime >= currFertileLand.timeToPlant ||
+                if (entity.currWorkTime >= m_CurrFertileLandOld.timeToPlant ||
                     entity.currWorkTime >= entity.maxWorkTime)
                 {
                     Debug.Log("Plant!");
-                    currFertileLand.Plant(entity.currWorkTime);
+                    m_CurrFertileLandOld.Plant(entity.currWorkTime);
                     entity.goPlant = false;
                     ResetValues();
                 }
@@ -141,15 +141,15 @@ public class IFarming : MonoBehaviour, IState
                 if (entity.characterRB.velocity != new Vector2(0.0f, 0.0f)) // Velocity = 0
                     entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                if (entity.currWorkTime < currFertileLand.timeToPlant &&
+                if (entity.currWorkTime < m_CurrFertileLandOld.timeToPlant &&
                     entity.currWorkTime < entity.maxWorkTime)
                     entity.currWorkTime += Time.deltaTime;
 
-                if (entity.currWorkTime >= currFertileLand.timeToPlant ||
+                if (entity.currWorkTime >= m_CurrFertileLandOld.timeToPlant ||
                     entity.currWorkTime >= entity.maxWorkTime)
                 {
                     Debug.Log("Plant!");
-                    currFertileLand.Plant(entity.currWorkTime);
+                    m_CurrFertileLandOld.Plant(entity.currWorkTime);
                     entity.goPlant = false;
                     ResetValues();
                 }
@@ -293,7 +293,7 @@ public class IFarming : MonoBehaviour, IState
     {
         entity.target = null;
         entity.lastTarget = null;
-        currFertileLand = null;
-        currHall = null;
+        m_CurrFertileLandOld = null;
+        m_CurrHallOld = null;
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 979771531203428147}
   - component: {fileID: 5276914748427935497}
   - component: {fileID: 5182074274944286399}
+  - component: {fileID: -1094556381732020207}
   m_Layer: 9
   m_Name: Farm
   m_TagString: Farm
@@ -157,3 +158,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   tileHandling: {fileID: 0}
+--- !u!114 &-1094556381732020207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979771531203428146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22540ab69aa21cb4ca579cd065b47055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

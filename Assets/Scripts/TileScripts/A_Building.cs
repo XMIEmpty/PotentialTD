@@ -49,13 +49,6 @@ public class A_Building : MonoBehaviour, IInteractable
     [Space(15)]
     public Animator animator;
 
-    public UnityEvent upgradeEvent;
-    public UnityAction action_Upgrade;
-    public UnityAction action_Repair;
-    public UnityAction action_Cancel;
-    public UnityAction action_Attack;
-
-
     [System.Serializable]
     public class Upgrading
     {
@@ -88,11 +81,6 @@ public class A_Building : MonoBehaviour, IInteractable
         //Debug.LogError(tileHandling);
 
         transform.position += new Vector3(0.0f, 0.0f, -0.00001f);
-        
-        action_Upgrade = Upgrade;
-        action_Repair = Repair;
-        action_Cancel = CancelAction;
-        action_Attack = Attack;
     }
 
 
@@ -123,7 +111,6 @@ public class A_Building : MonoBehaviour, IInteractable
         currentUpgradeLevel++;
 
         Debug.Log("Upgrade Complete \n\r Upgrade LvL *** " + currentUpgradeLevel + " ***");
-
     }
 
     public void Repair()

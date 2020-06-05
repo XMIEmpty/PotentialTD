@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hall : MonoBehaviour
+public class Hall_Old : MonoBehaviour
 {
     public int MushLogs = 0, Souls = 0, Food = 0;
 

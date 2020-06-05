@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FertileLand : MonoBehaviour
+public class FertileLand_Old : MonoBehaviour
 {
     Animator characterAnimator;
     

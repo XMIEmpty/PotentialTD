@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4554551470595944256}
   - component: {fileID: 1417635524557508778}
   - component: {fileID: 4554551470595944270}
-  - component: {fileID: 9211239283215260143}
+  - component: {fileID: -4263366933654270642}
   - component: {fileID: 8149159715461062620}
+  - component: {fileID: 9211239283215260143}
   m_Layer: 9
   m_Name: Gate
   m_TagString: Untagged
@@ -111,19 +112,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &9211239283215260143
-MonoBehaviour:
+--- !u!95 &-4263366933654270642
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4554551470595944269}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eddb8c0c586c4742803f0e7388310a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOpen: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8db259dc3767f4c45a30d195345168a9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8149159715461062620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,8 +183,21 @@ MonoBehaviour:
     newDamage: 0
     newAttackSpeed: 0
     newAttackRange: 0
-  animator: {fileID: 0}
+  animator: {fileID: -4263366933654270642}
   upgradeEvent:
     m_PersistentCalls:
       m_Calls: []
   tileHandling: {fileID: 0}
+--- !u!114 &9211239283215260143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554551470595944269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eddb8c0c586c4742803f0e7388310a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOpen: 0
