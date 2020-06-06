@@ -60,7 +60,8 @@ public class ITreeChopping : MonoBehaviour, IState
             {
                 entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
                 // Instantiate returned  logs Particle
-                entity.target.GetComponent<Hall_Old>().GetMushLogs(Mathf.RoundToInt(entity.currWorkTime));
+                
+                // entity.target.GetComponent<Hall_Old>().GetMushLogs(Mathf.RoundToInt(entity.currWorkTime));
                 entity.currWorkTime = 0;
                 entity.target = null;
                 entity.returnHarvested = false;

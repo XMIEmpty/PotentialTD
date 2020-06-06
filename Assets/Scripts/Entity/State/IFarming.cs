@@ -6,7 +6,7 @@ public class IFarming : MonoBehaviour, IState
 {
     private Entity entity;
     private FertileLand_Old m_CurrFertileLandOld;
-    private Hall_Old m_CurrHallOld;
+    private ResourceBarManager m_CurrResourceBarManager;
 
     private Harvestable currHarvestable;
 
@@ -73,7 +73,7 @@ public class IFarming : MonoBehaviour, IState
 
                     }
                     entity.target = entity.stateMethods.GetClosestThing(entity, "Hall");
-                    m_CurrHallOld = entity.buildings.mainHallOld;
+                    m_CurrResourceBarManager = entity.buildings.mainResourceBarManager;
                     //entity.buildings.allBuildings = entity.stateMethods.GetClosestBuilding(entity.);
                     Debug.Log("NNN New Target acquired: " + entity.target.name + "\n\r location: " + entity.target.transform.position);
                     entity.returnHarvested = true;
@@ -87,22 +87,22 @@ public class IFarming : MonoBehaviour, IState
 
         if (entity.goPlant == false && entity.returnHarvested == true)
         {
-            if (entity.stateMethods.GetTargetDistance(entity, m_CurrHallOld.transform.position) < 1f)
+            if (entity.stateMethods.GetTargetDistance(entity, m_CurrResourceBarManager.transform.position) < 1f)
             {// Velocity Set 0 + Deliver Food + Set Current Work To 0 +
              // Return_Harvested Set False + Go_Plant Set True + currHall Set Null
                 if (entity.characterRB.velocity != new Vector2(0.0f, 0.0f)) // Velocity = 0
                     entity.characterRB.velocity = new Vector2(0.0f, 0.0f);
 
-                m_CurrHallOld.GetFood(Mathf.RoundToInt(entity.currWorkTime));
+                m_CurrResourceBarManager.AddFood(Mathf.RoundToInt(entity.currWorkTime));
                 entity.currWorkTime = 0;
                 entity.returnHarvested = false;
                 entity.goPlant = true;
-                m_CurrHallOld = null;
+                m_CurrResourceBarManager = null;
             }
 
             if (entity.stateMethods.GetTargetDistance(entity, entity.targetPos) > 1f)
             {// Move Entity towards Target Position;
-                entity.stateMethods.MoveTo(entity, m_CurrHallOld.transform.position);
+                entity.stateMethods.MoveTo(entity, m_CurrResourceBarManager.transform.position);
             }
         }
 
@@ -294,6 +294,6 @@ public class IFarming : MonoBehaviour, IState
         entity.target = null;
         entity.lastTarget = null;
         m_CurrFertileLandOld = null;
-        m_CurrHallOld = null;
+        m_CurrResourceBarManager = null;
     }
 }

@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class MushLogCabin : MonoBehaviour, IPassMethods
+public class Hall : MonoBehaviour, IPassMethods
 {
     public string PassMethodName(int methodNum)
     {
@@ -12,9 +14,9 @@ public class MushLogCabin : MonoBehaviour, IPassMethods
                 return "";
             case 1:
                 return "";
-            case 2: 
+            case 2:
                 return "";
-            case 3: 
+            case 3:
                 return "";
         }
 
@@ -30,15 +32,10 @@ public class MushLogCabin : MonoBehaviour, IPassMethods
 
     private A_Building m_ABuilding;
 
-    
+
     private void Start()
     {
         if (!TryGetComponent<A_Building>(out var buildingFound)) return;
         m_ABuilding = buildingFound;
-    }
-
-    public void UpgradeGatheredMushLogs()
-    {
-        // Increase MushLog carry amount to Base Entity
     }
 }

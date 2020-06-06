@@ -10,6 +10,8 @@ public class TileHandling : MonoBehaviour
 {
     [SerializeField]
     Grid grid;
+
+    public ResourceBarManager resourceBarManager;
     public CanvasComponents canvasComponents;
 
     private Vector3Int cellPosition;
@@ -35,13 +37,13 @@ public class TileHandling : MonoBehaviour
 
     public GameObject[] selectedUnits, LastSelectedUnits;
 
-
     int x = Screen.width / 2;
     int y = Screen.height / 2;
 
 
     void Awake()
     {
+        
         selectTile = GetComponent<SelectTile>();
 
         grid = FindObjectOfType<Grid>();
@@ -50,6 +52,7 @@ public class TileHandling : MonoBehaviour
         wallsTM = grid.transform.Find("Walls").gameObject;
         groundsTM = grid.transform.Find("Grounds").gameObject;
 
+        resourceBarManager = GetComponent<ResourceBarManager>();
         canvasComponents = GameObject.Find("Canvas").GetComponent<CanvasComponents>();
     }
 
@@ -108,9 +111,25 @@ public class TileHandling : MonoBehaviour
                             break;
                         case 10: // Ground
 
+                            if (resourceBarManager.GetMushLogAmount() <
+                                selectedTileToBuild.GetComponent<A_Building>().mushLogCosts ||
+                                resourceBarManager.GetSoulAmount() <
+                                selectedTileToBuild.GetComponent<A_Building>().soulCosts ||
+                                resourceBarManager.GetFoodAmount() <
+                                selectedTileToBuild.GetComponent<A_Building>().foodCosts)
+                            {
+                                if (mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite != defaultTileHighlighter
+                                ) mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
+                                if (selectedTileToBuild) selectedTileToBuild = null;
+                                return;
+                            }
+
+
                             Debug.Log("Build [Shift],\n\r hit " + hit.transform.gameObject.name);
                             Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
-
+                            resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
+                                selectedTileToBuild.GetComponent<A_Building>().soulCosts,
+                                selectedTileToBuild.GetComponent<A_Building>().foodCosts);
                             break;
                     }
                 }
@@ -152,6 +171,7 @@ public class TileHandling : MonoBehaviour
                             //if (interactable == null) return;
                             //interactable.Interact();
                             canvasComponents.tileActionControlGuiScript.CreateButtonList();
+                            selectedUnit.GetComponent<A_Building>().SetBasicButtonsAttributes();
                             canvasComponents.OnClickChanges();
 
                             if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
@@ -192,9 +212,13 @@ public class TileHandling : MonoBehaviour
                         break;
                     case 10: // Ground
 
-                        Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
+                        // Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
                         Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
                         mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
+                        
+                        resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
+                            selectedTileToBuild.GetComponent<A_Building>().soulCosts,
+                            selectedTileToBuild.GetComponent<A_Building>().foodCosts);
                         selectedTileToBuild = null;
 
                         break;

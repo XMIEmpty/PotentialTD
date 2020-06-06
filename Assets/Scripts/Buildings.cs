@@ -8,7 +8,7 @@ public class Buildings : MonoBehaviour
     public List<MushTree_Old> mushTrees;
 
     public List<A_Building> allBuildings;
-    public Hall_Old mainHallOld;
+    public ResourceBarManager mainResourceBarManager;
     //public List<A_Building> Tent;
     //public List<A_Building> Cabin;
 
@@ -49,8 +49,8 @@ public class Buildings : MonoBehaviour
 
         for (int i = 0; i < buildingsTM.transform.childCount; i++)
         {
-            if (buildingsTM.transform.GetChild(i).GetComponent<Hall_Old>() && mainHallOld == null)
-                mainHallOld = buildingsTM.transform.GetChild(i).GetComponent<Hall_Old>();
+            if (buildingsTM.transform.GetChild(i).GetComponent<ResourceBarManager>() && mainResourceBarManager == null)
+                mainResourceBarManager = buildingsTM.transform.GetChild(i).GetComponent<ResourceBarManager>();
 
             if (buildingsTM.transform.GetChild(i).GetComponent<A_Building>())
                     allBuildings.Add(buildingsTM.transform.GetChild(i).GetComponent<A_Building>());

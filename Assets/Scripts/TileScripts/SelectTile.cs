@@ -50,7 +50,7 @@ public class SelectTile : MonoBehaviour
     {
         GameObject foundTile = GetPrefabTile(containsInName);
         A_Building a_Building = foundTile.GetComponent<A_Building>();
-        tilesHandler.canvasComponents.infoBoxText.text = a_Building.InfoBox;
+        tilesHandler.canvasComponents.infoBoxText.text = a_Building.infoBox;
         tilesHandler.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Open_InfoBox");
 
         // Set Costs Values and Open that as well
@@ -85,6 +85,7 @@ public class SelectTile : MonoBehaviour
     public void GetWall() => GetAndProcessPrefabData("Wall"); public void GetWall_InfoCosts() => GetAndProcessPrefabInfo("Wall");
 
     public void GetGate() => GetAndProcessPrefabData("Gate"); public void GetGate_InfoCosts() => GetAndProcessPrefabInfo("Gate");
+    public void GetHall() => GetAndProcessPrefabData("Hall"); public void GetHall_InfoCosts() => GetAndProcessPrefabInfo("Hall");
 
 
 

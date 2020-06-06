@@ -148,19 +148,10 @@ MonoBehaviour:
   getMe:
     m_PersistentCalls:
       m_Calls: []
+  portrait: {fileID: 0}
   tileName: Gate
   currentUpgradeLevel: 0
-  InfoBox: 'Represents Defensive Tiles around it.
-
-    Provides you with Food.
-
-
-    -
-    Can be Upgraded to have a second layer of FarmTiles around it.'
-  UL_Text: 
-  UR_Text: 
-  DL_Text: 
-  DR_Text: 
+  infoBox: Im a gate i open and close haha
   soulCosts: 5
   mushLogCosts: 5
   foodCosts: 10
@@ -184,9 +175,6 @@ MonoBehaviour:
     newAttackSpeed: 0
     newAttackRange: 0
   animator: {fileID: -4263366933654270642}
-  upgradeEvent:
-    m_PersistentCalls:
-      m_Calls: []
   tileHandling: {fileID: 0}
 --- !u!114 &9211239283215260143
 MonoBehaviour:

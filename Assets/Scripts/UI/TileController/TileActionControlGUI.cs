@@ -20,8 +20,6 @@ public class TileActionControlGUI : MonoBehaviour
 
     public void CreateButtonList()
     {
-        SetUpDefaultValues();
-        
         // If SelectedUnit contains IPassMethods interface
         if (!tilesHandler.selectedUnit.TryGetComponent(out IPassMethods passMethod)) return;
 
@@ -88,12 +86,6 @@ public class TileActionControlGUI : MonoBehaviour
         #endregion
     }
 
-
-    private void SetUpDefaultValues()
-    {
-        //m_ABuilding
-    }
-    
 
     private class ActionItem
     {

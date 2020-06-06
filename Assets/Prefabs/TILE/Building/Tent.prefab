@@ -148,13 +148,16 @@ MonoBehaviour:
   getMe:
     m_PersistentCalls:
       m_Calls: []
+  portrait: {fileID: 0}
   tileName: Tent
   currentUpgradeLevel: 0
-  InfoBox: 
-  UL_Text: 
-  UR_Text: 
-  DL_Text: 
-  DR_Text: 
+  infoBox: 'im wip
+
+    I am a placeholder for a resting ground.
+
+    I will be the
+    place where a tired worker can sit down and sleep or eat to get back the energy
+    he needs to work.'
   soulCosts: 5
   mushLogCosts: 5
   foodCosts: 1
@@ -168,9 +171,6 @@ MonoBehaviour:
   canUpgrade: 0
   upgrade: []
   animator: {fileID: 0}
-  upgradeEvent:
-    m_PersistentCalls:
-      m_Calls: []
   tileHandling: {fileID: 0}
 --- !u!114 &6541650924571591852
 MonoBehaviour:

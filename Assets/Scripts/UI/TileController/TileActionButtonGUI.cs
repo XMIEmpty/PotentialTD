@@ -86,7 +86,6 @@ public class TileActionButtonGUI : MonoBehaviour
                 selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction); });
             // Add the Entry to the event trigger list
             eventTrigger.triggers.Add(onPointerClickEntry);
-            Debug.Log("Click Actioon added \n\r" + pointerClickAction);
         }
 
         // if (!string.IsNullOrEmpty(pointerEnterAction)) // On Pointer Enter

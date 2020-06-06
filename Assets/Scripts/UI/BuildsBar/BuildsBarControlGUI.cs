@@ -15,18 +15,20 @@ public class BuildsBarControlGUI : MonoBehaviour
     private void Start()
     {
         m_tilesHandler = GameObject.Find("GameManager").GetComponent<TileHandling>();
-    }
-
-
-    private void Update()
-    {
+        
         StartsIs();
     }
 
 
+    // private void Update()
+    // {
+    //     StartsIs();
+    // }
+
+
     private void StartsIs()
     {
-        if (!Input.GetKeyDown(KeyCode.O)) return;
+        // if (!Input.GetKeyDown(KeyCode.O)) return;
         m_ActionInventory = new List<ActionItem>();
 
         for (var i = m_tilesHandler.prefabTileContainer.containers.Length - 1; i >= 0; i--)

@@ -18,6 +18,7 @@ MonoBehaviour:
     - {fileID: 4554551470595944269, guid: 727b3fbf678a8f2449a39e58bd57b51d, type: 3}
     - {fileID: 4554551470595944269, guid: 3fcfddf2f51c1da43a41432ad2035ef0, type: 3}
     - {fileID: 979771531203428146, guid: a597da690c270a94fa4921383099acf5, type: 3}
+    - {fileID: 4554551470595944269, guid: 9a842c759e156a54793cd432c45c766c, type: 3}
   - containerName: Defensive
     containerItems:
     - {fileID: 4554551470595944269, guid: 97d65d8d48eb8294ca8fe37423d1d146, type: 3}

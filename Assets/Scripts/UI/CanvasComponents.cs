@@ -172,7 +172,7 @@ public class CanvasComponents : MonoBehaviour
                             break;
                         case 9: // Tile
                             // Closing Controller Tile
-
+                            
                             m_AnimatorTileController.SetTrigger(CloseTileController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, false);
 
@@ -218,6 +218,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.LastSelectedUnit == null) // Null
                         {
                             // Opening Controller Tile
+                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorTileController.SetTrigger(OpenTileController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                             return;
@@ -226,6 +228,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.LastSelectedUnit.layer == 8) // Entity
                         {
                             // Switching from Entity To Tile
+                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorTileController.SetTrigger(OpenTileController);
                             m_AnimatorEntityController.SetTrigger(CloseEntityController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
@@ -234,6 +238,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.LastSelectedUnit.layer == 9) // Tile
                         {
                             // Remaining on Entity
+                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                         }
                         //tileUpgrade_Button.onClick.AddListener(tileHandling.selectedUnit.GetComponent<A_Building>().action_Upgrade);

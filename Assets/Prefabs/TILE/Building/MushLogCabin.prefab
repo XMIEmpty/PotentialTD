@@ -148,22 +148,16 @@ MonoBehaviour:
   getMe:
     m_PersistentCalls:
       m_Calls: []
-  tileName: MushLogCabin
+  portrait: {fileID: 0}
+  tileName: Mush Log Cabin
   currentUpgradeLevel: 0
-  InfoBox: 'Acts as a checkpoint for transfering all sorts of goods gathered by your
-    Entities to your supplies, but not for the following:
+  infoBox: 'im wip
 
-    -Souls
+    I am a placeholder for a sort of lumber mill but with mush
+    logs instead!
 
-    -Food
-
-
-    Offers
-    "More Mush" Upgrade.'
-  UL_Text: UP LEFT
-  UR_Text: UP RIGHT
-  DL_Text: DOWN LEFT
-  DR_Text: DOWN RIGHT
+    I will be able to improve the amount of mushlogs your workers
+    can gather and will represent a checkpoint for your mushlogs to be delivered.'
   soulCosts: 5
   mushLogCosts: 5
   foodCosts: 1
@@ -176,7 +170,7 @@ MonoBehaviour:
   attackRange: 0.01
   canUpgrade: 1
   upgrade:
-  - newTileName: NewerBuilding
+  - newTileName: Mush Log Cabin OP Edition
     soulsCosts: 10
     mushLogCosts: 5
     hungerCosts: 2
@@ -187,9 +181,6 @@ MonoBehaviour:
     newAttackSpeed: 1
     newAttackRange: 3
   animator: {fileID: 0}
-  upgradeEvent:
-    m_PersistentCalls:
-      m_Calls: []
   tileHandling: {fileID: 0}
 --- !u!114 &426440381255957071
 MonoBehaviour:
