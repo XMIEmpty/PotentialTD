@@ -1,29 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 
-public class TileHandling : MonoBehaviour
+public class TileHandling : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField]
-    Grid grid;
+    [SerializeField] private Grid grid;
 
     public ResourceBarManager resourceBarManager;
     public CanvasComponents canvasComponents;
 
     private Vector3Int cellPosition;
 
-    public TilesContainer tilesContainer;
-    public SelectTile selectTile;
     public PrefabTileContainer prefabTileContainer;
-
 
     [SerializeField] private Sprite defaultTileHighlighter;
     public GameObject selectedTileToBuild;
-    public GameObject buildingsTM, plantsTM, wallsTM, groundsTM;
+    public GameObject buildingsTm, plantsTm, wallsTm, groundsTm;
 
     [SerializeField]
     public GameObject mouseTileHighlighter;
@@ -33,40 +25,50 @@ public class TileHandling : MonoBehaviour
     /// Unit refers to any Entity, Tile or other that has been selected.
     /// </summary>
     public GameObject selectedUnit;
-    public GameObject LastSelectedUnit;
+    public GameObject lastSelectedUnit;
 
-    public GameObject[] selectedUnits, LastSelectedUnits;
-
-    int x = Screen.width / 2;
-    int y = Screen.height / 2;
+    public GameObject[] selectedUnits, lastSelectedUnits;
 
 
     void Awake()
     {
-        
-        selectTile = GetComponent<SelectTile>();
-
         grid = FindObjectOfType<Grid>();
-        buildingsTM = grid.transform.Find("Buildings").gameObject;
-        plantsTM = grid.transform.Find("Plants").gameObject;
-        wallsTM = grid.transform.Find("Walls").gameObject;
-        groundsTM = grid.transform.Find("Grounds").gameObject;
+        buildingsTm = grid.transform.Find("Buildings").gameObject;
+        plantsTm = grid.transform.Find("Plants").gameObject;
+        wallsTm = grid.transform.Find("Walls").gameObject;
+        groundsTm = grid.transform.Find("Grounds").gameObject;
 
         resourceBarManager = GetComponent<ResourceBarManager>();
         canvasComponents = GameObject.Find("Canvas").GetComponent<CanvasComponents>();
     }
+    
+    
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        
+        if (eventData.button == PointerEventData.InputButton.Left)
+            Debug.Log("Left click");
+        else if (eventData.button == PointerEventData.InputButton.Middle)
+            Debug.Log("Middle click");
+        else if (eventData.button == PointerEventData.InputButton.Right)
+            Debug.Log("Right click");
+    }
 
-
+    
     void Update()
     {
         //Processing
-        Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
+        var clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10));
 
         if (EventSystem.current.IsPointerOverGameObject()) // DON'T CONTINUE IF MOUSE OVER (G)UI 
         {
+            // OnPointerClick();
+                
             mouseTileHighlighter.SetActive(false);
-            //EventSystem.current.currentSelectedGameObject.GetComponent<sdasdasd0>();
 
+            if (Input.GetMouseButtonDown(0)) { return; }
+            if (Input.GetMouseButtonDown(1)) { return; }
+            if (Input.GetMouseButtonDown(2)) { return; }
 
             return;
         }
@@ -126,7 +128,7 @@ public class TileHandling : MonoBehaviour
 
 
                             Debug.Log("Build [Shift],\n\r hit " + hit.transform.gameObject.name);
-                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTm.transform);
                             resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
                                 selectedTileToBuild.GetComponent<A_Building>().soulCosts,
                                 selectedTileToBuild.GetComponent<A_Building>().foodCosts);
@@ -148,7 +150,7 @@ public class TileHandling : MonoBehaviour
                     case 8: // Entity
 
                         /*if (hits[i].transform.gameObject != selectedUnit)*/
-                        LastSelectedUnit = selectedUnit;
+                        lastSelectedUnit = selectedUnit;
                         selectedUnit = hit.transform.gameObject;
 
                         canvasComponents.OnClickChanges();
@@ -161,10 +163,10 @@ public class TileHandling : MonoBehaviour
                     case 9: // Tile
 
                         /*if (hits[i].transform.gameObject != selectedUnit)*/
-                        LastSelectedUnit = selectedUnit;
+                        lastSelectedUnit = selectedUnit;
                         selectedUnit = hit.transform.gameObject;
 
-                        if (hit.transform.parent == buildingsTM.transform)
+                        if (hit.transform.parent == buildingsTm.transform)
                         {
 
                             //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
@@ -183,7 +185,7 @@ public class TileHandling : MonoBehaviour
                     case 10: // Ground
 
                         /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/
-                        LastSelectedUnit = selectedUnit;
+                        lastSelectedUnit = selectedUnit;
                         selectedUnit = null;
 
                         canvasComponents.OnClickChanges();
@@ -213,7 +215,7 @@ public class TileHandling : MonoBehaviour
                     case 10: // Ground
 
                         // Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
-                        Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTM.transform);
+                        Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTm.transform);
                         mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
                         
                         resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
@@ -236,6 +238,15 @@ public class TileHandling : MonoBehaviour
                 case 8: // Entity
                     break;
                 case 9: // Tile
+                    
+                    if (hit.transform.gameObject == selectedUnit)
+                    {                    
+                        lastSelectedUnit = selectedUnit;
+                        selectedUnit = null;
+                        canvasComponents.OnClickChanges();
+                    }
+
+
 
                     Destroy(hit.transform.gameObject);
 

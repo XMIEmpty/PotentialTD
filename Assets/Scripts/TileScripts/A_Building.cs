@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -32,6 +34,8 @@ public class A_Building : MonoBehaviour
 
     public int currentHealth;
     public int armor = 0;
+    [Space(25)] public bool canCallForRepair = false;
+    [Space(25)] public bool canStopActiveActions = false;
 
     [Space(25)] public bool canAttack = false;
     [Range(0, 100)] public int damage = 1;
@@ -48,13 +52,16 @@ public class A_Building : MonoBehaviour
     {
         public string newTileName;
 
+        
         [Space(10)] public int soulsCosts;
         public int mushLogCosts;
         public int hungerCosts;
 
         [Space(10)] public int newMaxHealth;
         public int newArmor;
-
+        [Space(10)] public bool canUpgrade;
+        [Space(10)] public bool canCallForRepair = false;
+        [Space(10)] public bool canStopActiveActions = false;
         [Space(10)] public bool canAttack = false;
         [Range(0, 100)] public int newDamage;
         [Range(0.01f, 10.0f)] public float newAttackSpeed;
@@ -66,6 +73,7 @@ public class A_Building : MonoBehaviour
 
 
     [Header("Sprite Stuff")] private Sprite m_Sprite;
+    private static readonly int CloseInfoBox = Animator.StringToHash("Close_InfoBox");
 
     private void Start()
     {
@@ -79,7 +87,7 @@ public class A_Building : MonoBehaviour
     }
 
 
-    public void Upgrade()
+    private void Upgrade()
     {
         if (currentUpgradeLevel >= upgrade.Length)
         {
@@ -97,6 +105,9 @@ public class A_Building : MonoBehaviour
         currentHealth = maxHealth;
         armor = upgrade[currentUpgradeLevel].newArmor;
 
+        canUpgrade = upgrade[currentUpgradeLevel].canUpgrade;
+        canCallForRepair = upgrade[currentUpgradeLevel].canCallForRepair;
+        canStopActiveActions = upgrade[currentUpgradeLevel].canStopActiveActions;
         canAttack = upgrade[currentUpgradeLevel].canAttack;
         damage = upgrade[currentUpgradeLevel].newDamage;
         attackSpeed = upgrade[currentUpgradeLevel].newAttackSpeed;
@@ -104,114 +115,162 @@ public class A_Building : MonoBehaviour
 
         currentUpgradeLevel++;
 
-        Debug.Log("Upgrade Complete \n\r Upgrade LvL *** " + currentUpgradeLevel + " ***");
+        Debug.Log("Upgrade Complete \n\r Upgrade LvL " + currentUpgradeLevel);
+        tileHandling.canvasComponents.tileActionControlGuiScript.CreateButtonList();
+        tileHandling.canvasComponents.OnClickChanges();
     }
 
-    public void Repair()
+    
+    private void Repair()
     {
         // Call the closest agent found to repair this building
 
         // LATER UPDATE: The priorities jump from Idle < Health < Work < Build < Hunt
+        Debug.Log("Repair call Completed");
     }
 
-    public void CancelAction()
+    
+    private void StopAction()
     {
         // Add all local Action Cancelings
+        Debug.Log("Stop actions call Complete");
     }
 
-    public void Attack()
+    
+    private void Attack()
     {
         // Change Mouse to target icon
-        // when play clicks something check if it within range && if it is an enemyentity
+        // when play clicks something check if it within range && if it is an enemy entity
+        Debug.Log("Attack call Complete");
     }
 
 
     public void SetBasicButtonsAttributes()
     {
-        Debug.Log("Setting Up Basic Buttons");
         SetUpgradeButtonActions();
     }
-    
-    
-    
-    
-
-    private string pointerClickAction, pointerEnterAction, pointerExitAction;
 
 
     public void EmptyAndClosePrefabInfo()
     {
         tileHandling.canvasComponents.infoBoxText.text = "";
-        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Close_InfoBox");
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(CloseInfoBox);
         // Empty Costs Values and Close that as well
         tileHandling.canvasComponents.costsBoxGo.SetActive(false);
     }
 
-
+    
     /// <summary>
     /// Add the appropriate (based on settings) Events to the Event Trigger component
     /// Set up the Events with the appropriately added methods 
     /// </summary>
     private void SetUpgradeButtonActions()
-    {        
+    {
+        if (!canUpgrade) tileHandling.canvasComponents.tileUpgradeButton.interactable = false;
+        else if (canUpgrade) tileHandling.canvasComponents.tileUpgradeButton.interactable = true;
+        if (!canCallForRepair) tileHandling.canvasComponents.tileRepairButton.interactable = false;
+        if (canCallForRepair) tileHandling.canvasComponents.tileRepairButton.interactable = true;
+        if (!canStopActiveActions) tileHandling.canvasComponents.tileCancelButton.interactable = false;
+        if (canStopActiveActions) tileHandling.canvasComponents.tileCancelButton.interactable = true;
+        if (!canAttack) tileHandling.canvasComponents.tileAttackButton.interactable = false;
+        if (canAttack) tileHandling.canvasComponents.tileAttackButton.interactable = true;
         
-        // Get Event Trigger and Pass it to a variable
-        var eventTrigger = tileHandling.canvasComponents.tileUpgradeButton.GetComponent<EventTrigger>();
+        // Get Event Triggers and Pass them it to their appropriate variables
+        var upgradeTrigger = tileHandling.canvasComponents.tileUpgradeButton.GetComponent<EventTrigger>();
+        var repairTrigger = tileHandling.canvasComponents.tileRepairButton.GetComponent<EventTrigger>();
+        var cancelTrigger = tileHandling.canvasComponents.tileCancelButton.GetComponent<EventTrigger>();
+        var attackTrigger = tileHandling.canvasComponents.tileAttackButton.GetComponent<EventTrigger>();
 
         // Create variables for all possible Entry Types and pass them the appropriate entry type
-        var onPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
-        var onPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-        var onPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+        var onUpgradePointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
+        var onUpgradePointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onUpgradePointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+        
+        var onRepairPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
+        var onRepairPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onRepairPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+        
+        var onStopPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
+        var onStopPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onStopPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+        
+        var onAttackPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
+        var onAttackPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onAttackPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
 
+        // Is Cancel Button Interactable
+        if (upgradeTrigger.GetComponent<Button>().interactable)
+        {
+            // DELETE OLD List
+            upgradeTrigger.triggers.Clear();
 
-
-        #region DELETE OLD
-
-        // for (var i = eventTrigger.triggers.Count - 1; i >= 0; i--)
-        // {
-            eventTrigger.triggers.Clear();
-        // }
-        
-
-        #endregion
-        
-        
-        
-        
-        
-        
-        // Check if the action string is NOT null/empty
-        // if (!string.IsNullOrEmpty(pointerClickAction)) // On CLICK
-        // {
             // Add to the appropriate entry's callback a Listener with all the actions(methods) it oughts to call    
-            onPointerClickEntry.callback.AddListener((eventData) => { Upgrade(); });
+            onUpgradePointerClickEntry.callback.AddListener(eventData => { Upgrade(); });
             // Add the Entry to the event trigger list
-            eventTrigger.triggers.Add(onPointerClickEntry);
-        // }
+            upgradeTrigger.triggers.Add(onUpgradePointerClickEntry);
 
-        // if (!string.IsNullOrEmpty(pointerEnterAction)) // On Pointer Enter
-        // {
-            onPointerEnterEntry.callback.AddListener((eventData) =>
+            onUpgradePointerEnterEntry.callback.AddListener(evenData =>
             {
-                selectTile.Invoke("Get" + name + "_InfoCosts", 0f);
-
-                // Display Info Box
-                // Display Costs
+                // Display Costs, Display Info Box
+                selectTile.Invoke("Get" + name.Replace("(Clone)", string.Empty) + "_InfoCosts", 0f);
             });
-            eventTrigger.triggers.Add(onPointerEnterEntry);
-        // }
+            upgradeTrigger.triggers.Add(onUpgradePointerEnterEntry);
 
-        // if (!string.IsNullOrEmpty(pointerExitAction)) // On Pointer Exit
-        // {
-            onPointerExitEntry.callback.AddListener((eventData) =>
+            onUpgradePointerExitEntry.callback.AddListener(eventData =>
             {
-                selectTile.Invoke("EmptyAndClosePrefabInfo", 0f);
-
-                // Hide Info Box
-                // Hide Costs
-                // SendMessage(pointerExitAction);
+                if (eventData == null) throw new ArgumentNullException(nameof(eventData));
+                // Hide Costs, Hide Info Box
+                Invoke(nameof(EmptyAndClosePrefabInfo), 0f);
             });
-            eventTrigger.triggers.Add(onPointerExitEntry);
-        // }
+            upgradeTrigger.triggers.Add(onUpgradePointerExitEntry);
+        }
+
+        // Is Cancel Button Interactable
+        if (repairTrigger.GetComponent<Button>().interactable)
+        {
+            repairTrigger.triggers.Clear();
+            onRepairPointerClickEntry.callback.AddListener(eventData => { Repair(); });
+            repairTrigger.triggers.Add(onRepairPointerClickEntry);
+            onRepairPointerEnterEntry.callback.AddListener(evenData =>
+            {
+                selectTile.Invoke("Get" + name.Replace("(Clone)", string.Empty) + "_InfoCosts", 0);
+            });
+            repairTrigger.triggers.Add(onRepairPointerEnterEntry);
+            onRepairPointerExitEntry.callback.AddListener(eventData => { Invoke(nameof(EmptyAndClosePrefabInfo), 0f); });
+            repairTrigger.triggers.Add(onRepairPointerExitEntry);
+        }
+
+        // Is Cancel Button Interactable
+        if (cancelTrigger.GetComponent<Button>().interactable)
+        {
+            cancelTrigger.triggers.Clear();
+            onStopPointerClickEntry.callback.AddListener(eventData => { StopAction(); });
+            cancelTrigger.triggers.Add(onStopPointerClickEntry);
+            onStopPointerEnterEntry.callback.AddListener(evenData =>
+            {
+                selectTile.Invoke("Get" + name.Replace("(Clone)", string.Empty) + "_InfoCosts", 0);
+            });
+            cancelTrigger.triggers.Add(onStopPointerEnterEntry);
+            onStopPointerExitEntry.callback.AddListener(eventData => { Invoke(nameof(EmptyAndClosePrefabInfo), 0f); });
+            cancelTrigger.triggers.Add(onStopPointerExitEntry);
+        }
+
+        // Is Cancel Button Interactable
+        if (attackTrigger.GetComponent<Button>().interactable)
+        {
+            attackTrigger.triggers.Clear();
+            onAttackPointerClickEntry.callback.AddListener(eventData => { Attack(); });
+            attackTrigger.triggers.Add(onAttackPointerClickEntry);
+            onAttackPointerEnterEntry.callback.AddListener(evenData =>
+            {
+                selectTile.Invoke("Get" + name.Replace("(Clone)", string.Empty) + "_InfoCosts", 0);
+            });
+            attackTrigger.triggers.Add(onAttackPointerEnterEntry);
+            onAttackPointerExitEntry.callback.AddListener(eventData =>
+            {
+                Invoke(nameof(EmptyAndClosePrefabInfo), 0f);
+            });
+            attackTrigger.triggers.Add(onAttackPointerExitEntry);
+        }
     }
 }

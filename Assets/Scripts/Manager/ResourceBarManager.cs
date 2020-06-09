@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 
 public class ResourceBarManager : MonoBehaviour
@@ -23,16 +20,16 @@ public class ResourceBarManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            AddMushLog(5);
-            AddSouls(5);
-            AddFood(5);
+            AddMushLog(50);
+            AddSouls(50);
+            AddFood(50);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SubtractMushLog(5);
-            SubtractSouls(5);
-            SubtractFood(5);
+            SubtractMushLog(50);
+            SubtractSouls(50);
+            SubtractFood(50);
         }
     }
 

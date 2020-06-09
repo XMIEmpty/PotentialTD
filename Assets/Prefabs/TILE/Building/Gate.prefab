@@ -158,24 +158,29 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 0
   armor: 0
+  canCallForRepair: 0
+  canStopActiveActions: 0
   canAttack: 0
   damage: 1
   attackSpeed: 1
   attackRange: 0
-  canUpgrade: 0
+  canUpgrade: 1
   upgrade:
-  - newTileName: 
-    soulsCosts: 0
-    mushLogCosts: 0
-    hungerCosts: 0
-    newMaxHealth: 0
-    newArmor: 0
+  - newTileName: Gate Plus
+    soulsCosts: 15
+    mushLogCosts: 25
+    hungerCosts: 30
+    newMaxHealth: 45
+    newArmor: 1
+    canCallForRepair: 1
+    canStopActiveActions: 0
     canAttack: 0
     newDamage: 0
     newAttackSpeed: 0
     newAttackRange: 0
   animator: {fileID: -4263366933654270642}
   tileHandling: {fileID: 0}
+  selectTile: {fileID: 0}
 --- !u!114 &9211239283215260143
 MonoBehaviour:
   m_ObjectHideFlags: 0

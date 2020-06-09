@@ -79,9 +79,11 @@ public class TileActionControlGUI : MonoBehaviour
             // Get the ActionBtn Script from created GO(Button)
             var tileActionButtonGui = newButton.GetComponent<TileActionButtonGUI>(); 
 
-            // Pass into the script all values necessary 
+            // Pass all the actions
             tileActionButtonGui.SetOnPointerClickActionName(newActionInvItem.ClickActionName);
-            tileActionButtonGui.SetTileMainProperties(tilesHandler.selectedUnit, newActionInvItem.ScriptName);
+            
+            // Execute after all OnPoint Actions have been set
+            tileActionButtonGui.SetTileMainProperties(tilesHandler.selectedUnit, newActionInvItem.ScriptName); 
         }
         #endregion
     }

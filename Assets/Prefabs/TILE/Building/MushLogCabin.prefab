@@ -164,6 +164,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 0
   armor: 0
+  canCallForRepair: 0
+  canStopActiveActions: 0
   canAttack: 0
   damage: 0
   attackSpeed: 0.01
@@ -182,6 +184,7 @@ MonoBehaviour:
     newAttackRange: 3
   animator: {fileID: 0}
   tileHandling: {fileID: 0}
+  selectTile: {fileID: 0}
 --- !u!114 &426440381255957071
 MonoBehaviour:
   m_ObjectHideFlags: 0

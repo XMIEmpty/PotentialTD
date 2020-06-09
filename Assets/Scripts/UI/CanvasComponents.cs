@@ -17,8 +17,6 @@ public class CanvasComponents : MonoBehaviour
     public Image tilePortraitImage, tileFrameImage;
     public Text tileNameText;
     public Button tileUpgradeButton, tileRepairButton, tileCancelButton, tileAttackButton;
-    public Button tileUlButton, tileUrButton, tileDlButton, tileDrButton;
-    public Text tileUlText, tileUrText, tileDlText, tileDrText;
     public GameObject tileActionsMenu, tileViewport, tileContent;
 
 
@@ -29,8 +27,6 @@ public class CanvasComponents : MonoBehaviour
     public Text entityActionCategoryText;
     public Text entityHealthText, entityHungerText, entityEnergyText;
     public Button entityAboutButton;
-    public Button entityAction1Button, entityAction2Button, entityAction3Button, entityAction4Button;
-    public Text entityAction1Text, entityAction2Text, entityAction3Text, entityAction4Text;
     public GameObject entityActionsMenu, entityViewport, entityContent;
 
     [Header("Resource Bar Section")] public GameObject resourceBar;
@@ -114,14 +110,6 @@ public class CanvasComponents : MonoBehaviour
         entityHungerText = entityController.transform.Find("Hunger").Find("Text").GetComponent<Text>();
         entityEnergyText = entityController.transform.Find("Energy").Find("Text").GetComponent<Text>();
         entityAboutButton = entityController.transform.Find("About_Button").GetComponent<Button>();
-        entityAction1Button = entityController.transform.Find("1_Action_Button").GetComponent<Button>();
-        entityAction2Button = entityController.transform.Find("2_Action_Button").GetComponent<Button>();
-        entityAction3Button = entityController.transform.Find("3_Action_Button").GetComponent<Button>();
-        entityAction4Button = entityController.transform.Find("4_Action_Button").GetComponent<Button>();
-        entityAction1Text = entityAction1Button.transform.Find("Text").GetComponent<Text>();
-        entityAction2Text = entityAction2Button.transform.Find("Text").GetComponent<Text>();
-        entityAction3Text = entityAction3Button.transform.Find("Text").GetComponent<Text>();
-        entityAction4Text = entityAction4Button.transform.Find("Text").GetComponent<Text>();
         entityActionsMenu = entityController.transform.Find("ActionsMenu").gameObject;
         entityViewport = entityActionsMenu.transform.Find("Viewport").gameObject;
         entityContent = entityViewport.transform.Find("Content").gameObject;
@@ -159,9 +147,9 @@ public class CanvasComponents : MonoBehaviour
             if (tileHandling.selectedUnit == null) // When ground Selected
             {
                 Debug.Log("selectedUnit == null");
-                if (tileHandling.LastSelectedUnit != null)
+                if (tileHandling.lastSelectedUnit != null)
                 {
-                    switch (tileHandling.LastSelectedUnit.layer)
+                    switch (tileHandling.lastSelectedUnit.layer)
                     {
                         case 8: // Entity
                             // Closing Controller Entity
@@ -190,7 +178,7 @@ public class CanvasComponents : MonoBehaviour
                 {
                     case 8: // Entity
 
-                        if (tileHandling.LastSelectedUnit == null) // Null
+                        if (tileHandling.lastSelectedUnit == null) // Null
                         {
                             // Opening Controller Entity
                             m_AnimatorEntityController.SetTrigger(OpenEntityController);
@@ -198,7 +186,7 @@ public class CanvasComponents : MonoBehaviour
                             return;
                         }
 
-                        if (tileHandling.LastSelectedUnit.layer == 9) // Tile
+                        if (tileHandling.lastSelectedUnit.layer == 9) // Tile
                         {
                             // Switching from Tile To Entity
                             m_AnimatorTileController.SetTrigger(CloseTileController);
@@ -206,7 +194,7 @@ public class CanvasComponents : MonoBehaviour
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                         }
 
-                        if (tileHandling.LastSelectedUnit.layer == 8) // Entity
+                        if (tileHandling.lastSelectedUnit.layer == 8) // Entity
                         {
                             // Remaining on Entity
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
@@ -215,7 +203,7 @@ public class CanvasComponents : MonoBehaviour
                         break;
                     case 9: // Tile
 
-                        if (tileHandling.LastSelectedUnit == null) // Null
+                        if (tileHandling.lastSelectedUnit == null) // Null
                         {
                             // Opening Controller Tile
                             tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
@@ -225,7 +213,7 @@ public class CanvasComponents : MonoBehaviour
                             return;
                         }
 
-                        if (tileHandling.LastSelectedUnit.layer == 8) // Entity
+                        if (tileHandling.lastSelectedUnit.layer == 8) // Entity
                         {
                             // Switching from Entity To Tile
                             tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
@@ -235,7 +223,7 @@ public class CanvasComponents : MonoBehaviour
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                         }
 
-                        if (tileHandling.LastSelectedUnit.layer == 9) // Tile
+                        if (tileHandling.lastSelectedUnit.layer == 9) // Tile
                         {
                             // Remaining on Entity
                             tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;

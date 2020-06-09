@@ -6,17 +6,30 @@ public class Gate : MonoBehaviour, IPassMethods
     {
         //ToggleGate();
 
-        switch (methodNum)
+        switch (m_ABuilding.currentUpgradeLevel)
         {
             case 0:
-                return nameof(ToggleGate);
+            switch (methodNum)
+            {
+                case 0: return nameof(ToggleGate);
+                case 1: return nameof(Rotate);
+                case 2: return "";
+                case 3: return "";
+            }
+                break;
             case 1:
-                return nameof(Rotate);
-            case 2: 
-                return "";
-            case 3: 
-                return "";
+
+                switch (methodNum)
+                {
+                    case 0: return nameof(ToggleGate);
+                    case 1: return "";
+                    case 2: return "";
+                    case 3: return "";
+                }
+
+                break;
         }
+        
 
         return null;
     }
