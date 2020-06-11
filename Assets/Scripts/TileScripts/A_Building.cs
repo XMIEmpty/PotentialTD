@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class A_Building : MonoBehaviour
 {
     [HideInInspector] public string buildingTag;
     [HideInInspector] public bool isAvailable;
 
-    [Header("Necessary")]
-    public Button.ButtonClickedEvent getMe;
+    [Header("Necessary")] public Button.ButtonClickedEvent getMe;
 
     [Header("Profile")]
     [Space(15)]
     [Tooltip("Ideal size 300x width 165px height\n\rMinimum size 100px width 55px height")]
     public Sprite portrait;
+
     public string tileName = "NewBuilding";
     public int currentUpgradeLevel = 0;
 
     [TextArea] public string infoBox;
     // public string UL_Text, UR_Text, DL_Text, DR_Text;
 
-    [Header("BuildCosts")]
-    [Space(15)] public int soulCosts = 5;
+    [Header("BuildCosts")] [Space(15)] public int soulCosts = 5;
     public int mushLogCosts = 5;
     public int foodCosts = 1;
+    public Vector3Int allCosts;
 
-    [Header("DefaultAttributes")]
-    [Space(15)]
+    [Header("DefaultAttributes")] [Space(15)]
     public int maxHealth = 10;
 
     public int currentHealth;
@@ -45,18 +45,19 @@ public class A_Building : MonoBehaviour
 
     [Header("Other")] [Space(15)] public Animator animator;
 
-    
-    
+
+
     [System.Serializable]
     public class Upgrading
     {
         public string newTileName;
         [TextArea] public string infoBox;
-        
-        
-        [Space(10)] public int soulsCosts;
+
+
+        [Space(10)] public int soulCosts;
         public int mushLogCosts;
         public int foodCosts;
+        public Vector3Int allCosts;
 
         [Space(10)] public int newMaxHealth;
         public int newArmor;
@@ -69,8 +70,8 @@ public class A_Building : MonoBehaviour
         [Range(0.01f, 30.0f)] public float newAttackRange;
     }
 
-    
-    
+
+
     [HideInInspector] public TileHandling tileHandling;
     [SerializeField] private SelectTile selectTile;
 
@@ -87,9 +88,16 @@ public class A_Building : MonoBehaviour
         //Debug.LogError(tileHandling);
 
         transform.position += new Vector3(0.0f, 0.0f, -0.00001f);
+        allCosts.x = mushLogCosts;
+        allCosts.y = soulCosts;
+        allCosts.z = foodCosts;
     }
 
 
+    public void SelectIt() => transform.GetChild(0).gameObject.SetActive(true);
+    public void UnselectIt() => transform.GetChild(0).gameObject.SetActive(false);
+    
+    
     private void Upgrade()
     {
         if (currentUpgradeLevel >= upgrade.Length)
@@ -97,18 +105,21 @@ public class A_Building : MonoBehaviour
             Debug.Log("Max Upgrade Level Reached \n\r Upgrade *** failed ***");
             return;
         }
-        
+
         tileHandling.resourceBarManager.SubtractAll(
             upgrade[currentUpgradeLevel].mushLogCosts,
-            upgrade[currentUpgradeLevel].soulsCosts,
+            upgrade[currentUpgradeLevel].soulCosts,
             upgrade[currentUpgradeLevel].foodCosts);
 
         tileName = upgrade[currentUpgradeLevel].newTileName;
         infoBox = upgrade[currentUpgradeLevel].infoBox;
-        
-        soulCosts = upgrade[currentUpgradeLevel].soulsCosts;
+
         mushLogCosts = upgrade[currentUpgradeLevel].mushLogCosts;
+        soulCosts = upgrade[currentUpgradeLevel].soulCosts;
         foodCosts = upgrade[currentUpgradeLevel].foodCosts;
+        allCosts.x = upgrade[currentUpgradeLevel].mushLogCosts;
+        allCosts.y = upgrade[currentUpgradeLevel].soulCosts;
+        allCosts.z = upgrade[currentUpgradeLevel].foodCosts;
 
         maxHealth = upgrade[currentUpgradeLevel].newMaxHealth;
         currentHealth = maxHealth;
@@ -188,6 +199,7 @@ public class A_Building : MonoBehaviour
         var repairTrigger = tileHandling.canvasComponents.tileRepairButton.GetComponent<EventTrigger>();
         var cancelTrigger = tileHandling.canvasComponents.tileCancelButton.GetComponent<EventTrigger>();
         var attackTrigger = tileHandling.canvasComponents.tileAttackButton.GetComponent<EventTrigger>();
+        var infoTrigger = tileHandling.canvasComponents.tileInfoButton.GetComponent<EventTrigger>();
 
         // Create variables for all possible Entry Types and pass them the appropriate entry type
         var onUpgradePointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
@@ -205,6 +217,9 @@ public class A_Building : MonoBehaviour
         var onAttackPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
         var onAttackPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
         var onAttackPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+
+        var onInfoPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onInfoPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
 
         // Is Upgrade Button Interactable
         if (upgradeTrigger.GetComponent<Button>().interactable)
@@ -280,6 +295,23 @@ public class A_Building : MonoBehaviour
             });
             attackTrigger.triggers.Add(onAttackPointerExitEntry);
         }
+
+        if (infoTrigger.GetComponent<Button>().interactable)
+        {
+            infoTrigger.triggers.Clear();
+            // onAttackPointerClickEntry.callback.AddListener(eventData => { Attack(); });
+            // infoTrigger.triggers.Add(onAttackPointerClickEntry);
+            onInfoPointerEnterEntry.callback.AddListener(evenData =>
+            {
+                SetInfoButtonInfo();
+            });
+            infoTrigger.triggers.Add(onInfoPointerEnterEntry);
+            onInfoPointerExitEntry.callback.AddListener(eventData =>
+            {
+                Invoke(nameof(EmptyAndClosePrefabInfo), 0f);
+            });
+            infoTrigger.triggers.Add(onInfoPointerExitEntry);
+        }
     }
     
     
@@ -295,11 +327,18 @@ public class A_Building : MonoBehaviour
     private void SetUpgradeCosts()
     {
         tileHandling.canvasComponents.mushLogCostsText.text = upgrade[currentUpgradeLevel].mushLogCosts.ToString();
-        tileHandling.canvasComponents.soulCostsText.text = upgrade[currentUpgradeLevel].soulsCosts.ToString();
+        tileHandling.canvasComponents.soulCostsText.text = upgrade[currentUpgradeLevel].soulCosts.ToString();
         tileHandling.canvasComponents.foodCostsText.text = upgrade[currentUpgradeLevel].foodCosts.ToString();
     }
 
     
+    private void SetInfoButtonInfo()
+    {
+        tileHandling.canvasComponents.infoBoxText.text = tileName + "\n\r" + infoBox;
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Open_InfoBox");
+    }
+
+
     private void UpdateDefaultButtonStatus()
     {
         if (!canUpgrade) tileHandling.canvasComponents.tileUpgradeButton.interactable = false;

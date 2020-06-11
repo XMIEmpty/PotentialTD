@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Net.Http.Headers;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 
@@ -27,7 +29,7 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
     public GameObject selectedUnit;
     public GameObject lastSelectedUnit;
 
-    public GameObject[] selectedUnits, lastSelectedUnits;
+    public List<GameObject> selectedUnits;
 
 
     void Awake()
@@ -82,7 +84,7 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
 
         if (selectedUnit != null) selectionHighlighter.transform.position = selectedUnit.transform.position;
 
-
+        if (selectedTileToBuild) ClearSelectedUnitList();
 
         // Left_Shift - UP -> Remove Selected Tile
         if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -95,8 +97,93 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
         // Left_Shift - HOLD DOWN -> Keep Building Selected
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            if(selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+            
             if (Input.GetMouseButtonDown(0))
-            {
+            { 
+                // LMB - Down -> Select Tile on ground
+                if (selectedTileToBuild == null) // Attempt to Select
+                {
+                    switch (hit.transform.gameObject.layer)
+                    {
+                        case 8: // Entity
+
+                            break;
+                        case 9: // Tile
+
+                            /*if (hits[i].transform.gameObject != selectedUnit)*/
+                            var tileHit = hit.transform.gameObject;
+                            lastSelectedUnit = selectedUnit;
+                            selectedUnit = tileHit;
+
+                            // Is a Building
+                            if (tileHit.TryGetComponent<A_Building>(out var aBuilding))
+                            {
+                                switch (tileHit.transform.GetChild(0).gameObject.activeInHierarchy)
+                                {
+                                    case true:
+                                        
+                                        // Remove from list
+                                        tileHit.transform.GetChild(0).gameObject.SetActive(false);
+                                        RemoveFromSelectedUnitList(GetSelectedUnitFromList(tileHit));
+                                        
+                                        break;
+                                    case false:
+
+                                        // If list contains at least one item
+                                        if (selectedUnits.Count > 0)
+                                        {
+                                            // Has same name like first tile from Selection list
+                                            if (aBuilding.tileName ==
+                                                selectedUnits[0].GetComponent<A_Building>().tileName)
+                                            {
+                                                // Add to list
+                                                tileHit.transform.GetChild(0).gameObject.SetActive(true);
+                                                selectedUnits.Add(tileHit);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            tileHit.transform.GetChild(0).gameObject.SetActive(true);
+                                            selectedUnits.Add(tileHit);
+                                        }
+
+                                        break;
+                                }
+                            }
+                            
+
+                            // if (hit.transform.parent == buildingsTm.transform)
+                            // {
+                            //     //var interactable = hits[i].transform.GetComponent<IInteractable>(); /*buildingsTilemap.GetInstantiatedObject(cellPosition).GetComponent<IInteractable>();*/
+                            //     //if (interactable == null) return;
+                            //     //interactable.Interact();
+                            //     canvasComponents.tileActionControlGuiScript.CreateButtonList();
+                            //     selectedUnit.GetComponent<A_Building>().SetBasicButtonsAttributes();
+                            //     canvasComponents.OnClickChanges();
+                            //
+                            //     if (!selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(true);
+                            //     selectionHighlighter.GetComponent<SpriteRenderer>().color =
+                            //         new Color(251f / 255f, 245f / 255f, 255f / 255f, 255f / 255f);
+                            //     //Debug.Log("Color Updated To\n\r" + selectionHighlighter.GetComponent<SpriteRenderer>().color);
+                            // }
+
+                            break;
+                        case 10: // Ground
+                            
+                            // /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/
+                            // lastSelectedUnit = selectedUnit;
+                            // selectedUnit = null;
+                            //
+                            // canvasComponents.OnClickChanges();
+                            //
+                            // if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+                            // Debug.Log("Ground has been hit");
+
+                            break;
+                    }
+                }
+
                 if (selectedTileToBuild) // Attempt to Build
                 {
                     switch (hit.transform.gameObject.layer)
@@ -142,6 +229,8 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
 
         if (!Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
         {
+            if (selectedUnits.Count > 0) ClearSelectedUnitList(); 
+
             // LMB - Down -> Select Tile on ground
             if (selectedTileToBuild == null) // Attempt to Select
             {
@@ -185,6 +274,8 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
                     case 10: // Ground
 
                         /*if (hits[i].transform.gameObject != selectedUnit && selectedUnit != null)*/
+                        if (selectedUnits.Count > 0) ClearSelectedUnitList();
+                        
                         lastSelectedUnit = selectedUnit;
                         selectedUnit = null;
 
@@ -198,32 +289,36 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
             }
 
             // LMB - Down -> Build One Tile
-            if (selectedTileToBuild && hit)   // Attempt to Build
+            if (selectedTileToBuild)   // Attempt to Build
             {
-                switch (hit.transform.gameObject.layer)
+                if (hit)
                 {
-                    case 8: // Entity
+                    switch (hit.transform.gameObject.layer)
+                    {
+                        case 8: // Entity
 
 
 
-                        break;
-                    case 9: // Tile
+                            break;
+                        case 9: // Tile
 
-                        Debug.Log("Can't Build there,\n\r hit " + hit.transform.gameObject.name);
+                            Debug.Log("Can't Build there,\n\r hit " + hit.transform.gameObject.name);
 
-                        break;
-                    case 10: // Ground
+                            break;
+                        case 10: // Ground
 
-                        // Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
-                        Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity).transform.SetParent(buildingsTm.transform);
-                        mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
-                        
-                        resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
-                            selectedTileToBuild.GetComponent<A_Building>().soulCosts,
-                            selectedTileToBuild.GetComponent<A_Building>().foodCosts);
-                        selectedTileToBuild = null;
+                            // Debug.Log("Build,\n\r hit " + hit.transform.gameObject.name);
+                            Instantiate(selectedTileToBuild, grid.GetCellCenterLocal(cellPosition), Quaternion.identity)
+                                .transform.SetParent(buildingsTm.transform);
+                            mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = defaultTileHighlighter;
 
-                        break;
+                            resourceBarManager.SubtractAll(selectedTileToBuild.GetComponent<A_Building>().mushLogCosts,
+                                selectedTileToBuild.GetComponent<A_Building>().soulCosts,
+                                selectedTileToBuild.GetComponent<A_Building>().foodCosts);
+                            selectedTileToBuild = null;
+
+                            break;
+                    }
                 }
             }
             return;
@@ -239,15 +334,41 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
                     break;
                 case 9: // Tile
                     
+                    // Hit is our selected tile
                     if (hit.transform.gameObject == selectedUnit)
-                    {                    
-                        lastSelectedUnit = selectedUnit;
-                        selectedUnit = null;
-                        canvasComponents.OnClickChanges();
+                    { 
+                        // Its a building
+                        if (hit.transform.TryGetComponent<A_Building>(out var aBuilding))
+                        {
+                            var resources = aBuilding.allCosts;
+                            resourceBarManager.AddAll(resources.x, resources.y, resources.z);
+
+                            lastSelectedUnit = selectedUnit;
+                            selectedUnit = null;
+                            canvasComponents.OnClickChanges();
+
+
+                            if (selectionHighlighter.activeInHierarchy) selectionHighlighter.SetActive(false);
+                            Destroy(hit.transform.gameObject);
+                        }
                     }
 
+                    // Hit isn't our selected tile
+                    if (hit.transform.gameObject != selectedUnit)
+                    {
+                        // Its a building
+                        if (hit.transform.TryGetComponent<A_Building>(out var aBuilding))
+                        {
+                            var resources = aBuilding.allCosts;
+                            resourceBarManager.AddAll(resources.x, resources.y, resources.z);
+                            
+                            Destroy(hit.transform.gameObject);
+                        }
+                    }
 
-
+                    
+                    // var resources = selectedUnit.GetComponent<A_Building>().allCosts;
+                    // resourceBarManager.AddAll(resources.x, resources.y, resources.z);
                     Destroy(hit.transform.gameObject);
 
                     break;
@@ -255,6 +376,40 @@ public class TileHandling : MonoBehaviour, IPointerClickHandler
                     break;
             }
             return;
+        }
+    }
+
+
+    public GameObject GetSelectedUnitFromList(GameObject gameObjectToLookFor)
+    {
+        for (var i = selectedUnits.Count - 1; i >= 0; i--)
+        {
+            if (selectedUnits[i] == gameObjectToLookFor)
+            {
+                return selectedUnits[i];
+            }
+        }
+
+        return null;
+    }
+
+    public void RemoveFromSelectedUnitList(GameObject gameObjectToRemove)
+    {
+        for (var i = selectedUnits.Count - 1; i >= 0; i--)
+        {
+            if (selectedUnits[i] == gameObjectToRemove)
+            {
+                selectedUnits.RemoveAt(i);
+            } 
+        }
+    }
+
+    public void ClearSelectedUnitList()
+    {
+        for (var i = selectedUnits.Count - 1; i >= 0; i--)
+        {
+            selectedUnits[i].transform.GetChild(0).gameObject.SetActive(false);
+            selectedUnits.Remove(selectedUnits[i]);
         }
     }
 }

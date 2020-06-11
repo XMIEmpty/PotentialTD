@@ -398,7 +398,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1430756987}
   m_HandleRect: {fileID: 1430756986}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2184,7 +2184,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1161839654}
   m_HandleRect: {fileID: 1161839653}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4392,37 +4392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  m_Delegates: []
 --- !u!114 &1529046647 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8590981861799624291, guid: 06fb6aead8b753843b960e6074cc7f3f,
@@ -5217,7 +5187,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v0.0.4a
+  m_Text: v0.0.4b
 --- !u!222 &1779907711
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7100,6 +7070,7 @@ MonoBehaviour:
   tileRepairButton: {fileID: 0}
   tileCancelButton: {fileID: 0}
   tileAttackButton: {fileID: 0}
+  tileInfoButton: {fileID: 0}
   tileActionsMenu: {fileID: 0}
   tileViewport: {fileID: 0}
   tileContent: {fileID: 0}

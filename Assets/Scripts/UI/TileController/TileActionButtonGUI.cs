@@ -10,7 +10,6 @@ public class TileActionButtonGUI : MonoBehaviour
     private TileHandling tileHandling;
     private Vector3Int actionCosts;
     private string actionInfo;
-    
 
     #region Create variables for all possible Interaction types
     private string pointerClickAction, pointerEnterAction, pointerExitAction, pointerDownAction, pointerUpAction;
@@ -19,7 +18,6 @@ public class TileActionButtonGUI : MonoBehaviour
     private string pointerDeselectAction, pointerScrollAction, pointerCancelAction;
     private static readonly int CloseInfoBox = Animator.StringToHash("Close_InfoBox");
     private static readonly int OpenInfoBox = Animator.StringToHash("Open_InfoBox");
-
     #endregion
 
 
@@ -39,11 +37,13 @@ public class TileActionButtonGUI : MonoBehaviour
         SetActions();
     }
     
+    
     private void SetButtonText()
     {
         transform.GetChild(0).gameObject.GetComponent<Text>().text = Regex.Replace(pointerClickAction, "(\\B[A-Z])", " $1");
     }
 
+    
     public void PassMethodCostsAndInfo(Vector3Int costs, string info)
     {
         actionCosts = costs;
@@ -85,6 +85,7 @@ public class TileActionButtonGUI : MonoBehaviour
         tileHandling.canvasComponents.soulCostsText.text = actionCosts.y.ToString(); // Soul
         tileHandling.canvasComponents.foodCostsText.text = actionCosts.z.ToString(); // Food
     }
+    
     
     private void EmptyAndCloseCostsAndInfoBox()
     {

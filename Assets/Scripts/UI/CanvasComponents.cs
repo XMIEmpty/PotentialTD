@@ -16,7 +16,7 @@ public class CanvasComponents : MonoBehaviour
     [Header("Tile Controller Section")] public GameObject tileController;
     public Image tilePortraitImage, tileFrameImage;
     public Text tileNameText;
-    public Button tileUpgradeButton, tileRepairButton, tileCancelButton, tileAttackButton;
+    public Button tileUpgradeButton, tileRepairButton, tileCancelButton, tileAttackButton, tileInfoButton;
     public GameObject tileActionsMenu, tileViewport, tileContent;
 
 
@@ -95,6 +95,7 @@ public class CanvasComponents : MonoBehaviour
         tileRepairButton = tileController.transform.Find("Repair_Button").GetComponent<Button>();
         tileCancelButton = tileController.transform.Find("Stop-Cancel_Button").GetComponent<Button>();
         tileAttackButton = tileController.transform.Find("Attack_Button").GetComponent<Button>();
+        tileInfoButton = tileController.transform.Find("Info_Button").GetComponent<Button>();
         tileActionsMenu = tileController.transform.Find("ActionsMenu").gameObject;
         tileViewport = tileActionsMenu.transform.Find("Viewport").gameObject;
         tileContent = tileViewport.transform.Find("Content").gameObject;
