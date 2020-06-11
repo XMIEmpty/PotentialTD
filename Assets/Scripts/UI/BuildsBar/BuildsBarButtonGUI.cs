@@ -11,14 +11,13 @@ public class BuildsBarButtonGUI : MonoBehaviour
 
     private TileHandling tileHandling;
 
-
-    private bool isExpensive = false;
     
     private void Start()
     {
         tileHandling = GameObject.Find("GameManager").GetComponent<TileHandling>();
     }
 
+    
     public void SetTileProperties(GameObject tilePrefabGo)
     {
         selectTile = GameObject.Find("GameManager").GetComponent<SelectTile>();
@@ -64,6 +63,7 @@ public class BuildsBarButtonGUI : MonoBehaviour
         eventTrigger.triggers.Add(onPointerClickEntry);
     }
 
+    
     private void CheckPrices()
     {
         if (tileHandling.resourceBarManager.GetMushLogAmount() < tilePrefab.GetComponent<A_Building>().mushLogCosts)
@@ -93,6 +93,7 @@ public class BuildsBarButtonGUI : MonoBehaviour
         }
     }
 
+    
     public void ResetValuesOnPointerExit()
     {
         tileHandling.canvasComponents.mushLogCostsText.GetComponent<Text>().color = Color.white;

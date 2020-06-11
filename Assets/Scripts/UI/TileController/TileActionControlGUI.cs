@@ -36,6 +36,9 @@ public class TileActionControlGUI : MonoBehaviour
             var newItem = new ActionItem();
             newItem.ScriptName = passMethod.GetScriptName();
             newItem.ClickActionName = passMethod.PassMethodName(i);
+            newItem.ActionCosts = passMethod.PassMethodCosts(i);
+            newItem.ActionInfo = passMethod.PassMethodInfo(i);
+            
             
             // Finally add the ActionItem to the List with the others
             // (This represents the complete button containing all data it needs to contain)
@@ -81,6 +84,7 @@ public class TileActionControlGUI : MonoBehaviour
 
             // Pass all the actions
             tileActionButtonGui.SetOnPointerClickActionName(newActionInvItem.ClickActionName);
+            tileActionButtonGui.PassMethodCostsAndInfo(newActionInvItem.ActionCosts, newActionInvItem.ActionInfo);
             
             // Execute after all OnPoint Actions have been set
             tileActionButtonGui.SetTileMainProperties(tilesHandler.selectedUnit, newActionInvItem.ScriptName); 
@@ -92,6 +96,8 @@ public class TileActionControlGUI : MonoBehaviour
     private class ActionItem
     {
         public string ScriptName;
+        public Vector3Int ActionCosts;
+        public string ActionInfo;
 
         #region Action Names
         public string ClickActionName;

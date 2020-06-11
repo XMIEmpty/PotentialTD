@@ -7,6 +7,9 @@ public class TileActionButtonGUI : MonoBehaviour
 {
     private GameObject selectedBuilding;
     private string selectedScriptName;
+    private TileHandling tileHandling;
+    private Vector3Int actionCosts;
+    private string actionInfo;
     
 
     #region Create variables for all possible Interaction types
@@ -14,12 +17,21 @@ public class TileActionButtonGUI : MonoBehaviour
     private string pointerBeginDragAction, pointerInitializePotentialDragAction, pointerMoveAction;
     private string pointerEndDragAction, pointerDropAction, pointerSelectAction, pointerUpdateSelectedAction;
     private string pointerDeselectAction, pointerScrollAction, pointerCancelAction;
+    private static readonly int CloseInfoBox = Animator.StringToHash("Close_InfoBox");
+    private static readonly int OpenInfoBox = Animator.StringToHash("Open_InfoBox");
+
     #endregion
-    
-    
+
+
+    private void Start()
+    {
+        tileHandling = GameObject.Find("GameManager").GetComponent<TileHandling>();
+    }
+
+
     public void SetTileMainProperties(GameObject selectedBuildingTile, string selectedBuildingScriptName)
     {
-        // Set the passed values to the Class's equavalent values
+        // Set the passed values to the Class's equivalent values
         selectedBuilding = selectedBuildingTile;
         selectedScriptName = selectedBuildingScriptName;
 
@@ -32,7 +44,13 @@ public class TileActionButtonGUI : MonoBehaviour
         transform.GetChild(0).gameObject.GetComponent<Text>().text = Regex.Replace(pointerClickAction, "(\\B[A-Z])", " $1");
     }
 
-    
+    public void PassMethodCostsAndInfo(Vector3Int costs, string info)
+    {
+        actionCosts = costs;
+        actionInfo = info;
+    }
+
+
     #region Only for External Call from Tile-Action-Controller Figure
     public void SetOnPointerClickActionName(string actionName) => pointerClickAction = actionName;
     // public void SetOnPointerEnterActionName(string actionName) => pointerEnterAction = actionName;
@@ -51,6 +69,31 @@ public class TileActionButtonGUI : MonoBehaviour
     // public void SetOnPointerCancelActionName(string actionName) => pointerCancelAction = actionName;
     #endregion
 
+
+    private void SetActionButtonCostsAndInfo()
+    {
+        tileHandling.canvasComponents.infoBoxText.text = actionInfo;
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(OpenInfoBox);
+        ApplyCosts();
+        tileHandling.canvasComponents.costsBoxGo.SetActive(true);
+    }
+
+
+    private void ApplyCosts()
+    {
+        tileHandling.canvasComponents.mushLogCostsText.text = actionCosts.x.ToString(); // MushLog
+        tileHandling.canvasComponents.soulCostsText.text = actionCosts.y.ToString(); // Soul
+        tileHandling.canvasComponents.foodCostsText.text = actionCosts.z.ToString(); // Food
+    }
+    
+    private void EmptyAndCloseCostsAndInfoBox()
+    {
+        tileHandling.canvasComponents.infoBoxText.text = "";
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(CloseInfoBox);
+        // Empty Costs Values and Close that as well
+        tileHandling.canvasComponents.costsBoxGo.SetActive(false);
+    }
+    
     
     /// <summary>
     /// Add the appropriate (based on settings) Events to the Event Trigger component
@@ -58,13 +101,13 @@ public class TileActionButtonGUI : MonoBehaviour
     /// </summary>
     private void SetActions()
     {
-        // Get Event Trigger and Pass it to a variable
+        // Get Event Trigger and Pass it to a variable 
         var eventTrigger = GetComponent<EventTrigger>();
         
         // Create variables for all possible Entry Types and pass them the appropriate entry type
         var onPointerClickEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerClick};
-        // var onPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-        // var onPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+        var onPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+        var onPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
         // var onPointerDownEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerDown};
         // var onPointerUpEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerUp};
         // var onPointerBeginDragEntry = new EventTrigger.Entry {eventID = EventTriggerType.BeginDrag};
@@ -83,24 +126,24 @@ public class TileActionButtonGUI : MonoBehaviour
         {
             // Add to the appropriate entry's callback a Listener with all the actions(methods) it oughts to call    
             onPointerClickEntry.callback.AddListener((eventData) => {
-                selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction); });
+                selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction);
+                tileHandling.resourceBarManager.SubtractAll(
+                    actionCosts.x, actionCosts.y, actionCosts.z); });
             // Add the Entry to the event trigger list
             eventTrigger.triggers.Add(onPointerClickEntry);
         }
 
-        // if (!string.IsNullOrEmpty(pointerEnterAction)) // On Pointer Enter
-        // {
-        //     onPointerEnterEntry.callback.AddListener((eventData) => {
-        //         selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerEnterAction); });
-        //     eventTrigger.triggers.Add(onPointerEnterEntry);
-        // }
-        //
-        // if (!string.IsNullOrEmpty(pointerExitAction)) // On Pointer Exit
-        // {
-        //     onPointerExitEntry.callback.AddListener((eventData) => {
-        //         selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerExitAction); });
-        //     eventTrigger.triggers.Add(onPointerExitEntry);
-        // }
+        if (!string.IsNullOrEmpty(pointerClickAction)) // On Pointer Enter
+        {
+            onPointerEnterEntry.callback.AddListener((eventData) => { SetActionButtonCostsAndInfo(); });
+            eventTrigger.triggers.Add(onPointerEnterEntry);
+        }
+        
+        if (!string.IsNullOrEmpty(pointerClickAction)) // On Pointer Exit
+        {
+            onPointerExitEntry.callback.AddListener((eventData) => { EmptyAndCloseCostsAndInfoBox();});
+            eventTrigger.triggers.Add(onPointerExitEntry);
+        }
         //
         // if (!string.IsNullOrEmpty(pointerDownAction)) // On Pointer Down
         // {

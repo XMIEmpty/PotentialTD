@@ -34,7 +34,21 @@ public class SelectTile : MonoBehaviour
                 }
             }
         }
+
         return null;
+    }
+
+
+    public void GetAndProcessPrefabInfo(string containsInName)
+    {
+        var foundTile = GetPrefabTile(containsInName);
+        var a_Building = foundTile.GetComponent<A_Building>();
+        tilesHandler.canvasComponents.infoBoxText.text = a_Building.infoBox;
+        tilesHandler.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Open_InfoBox");
+
+        // Set Costs Values and Open that as well
+        SetCosts(a_Building);
+        tilesHandler.canvasComponents.costsBoxGo.SetActive(true);
     }
 
 
@@ -42,20 +56,8 @@ public class SelectTile : MonoBehaviour
     {
         GameObject foundTile = GetPrefabTile(containsInName);
         tilesHandler.selectedTileToBuild = foundTile;
-        tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite = foundTile.GetComponent<SpriteRenderer>().sprite;
-    }
-
-
-    public void GetAndProcessPrefabInfo(string containsInName)
-    {
-        GameObject foundTile = GetPrefabTile(containsInName);
-        A_Building a_Building = foundTile.GetComponent<A_Building>();
-        tilesHandler.canvasComponents.infoBoxText.text = a_Building.infoBox;
-        tilesHandler.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger("Open_InfoBox");
-
-        // Set Costs Values and Open that as well
-        SetCosts(a_Building);
-        tilesHandler.canvasComponents.costsBoxGo.SetActive(true);
+        tilesHandler.mouseTileHighlighter.GetComponent<SpriteRenderer>().sprite =
+            foundTile.GetComponent<SpriteRenderer>().sprite;
     }
 
 
@@ -76,17 +78,23 @@ public class SelectTile : MonoBehaviour
     }
 
 
-    public void GetTent() => GetAndProcessPrefabData("Tent"); public void GetTent_InfoCosts() => GetAndProcessPrefabInfo("Tent");
-
-    public void GetMushLogCabin() => GetAndProcessPrefabData("MushLogCabin"); public void GetMushLogCabin_InfoCosts() => GetAndProcessPrefabInfo("MushLogCabin");
-
-    public void GetFarm() => GetAndProcessPrefabData("Farm"); public void GetFarm_InfoCosts() => GetAndProcessPrefabInfo("Farm");
-
-    public void GetWall() => GetAndProcessPrefabData("Wall"); public void GetWall_InfoCosts() => GetAndProcessPrefabInfo("Wall");
-
-    public void GetGate() => GetAndProcessPrefabData("Gate"); public void GetGate_InfoCosts() => GetAndProcessPrefabInfo("Gate");
-    public void GetHall() => GetAndProcessPrefabData("Hall"); public void GetHall_InfoCosts() => GetAndProcessPrefabInfo("Hall");
-
+    public void GetTent() => GetAndProcessPrefabData("Tent");
+    public void GetTent_InfoCosts() => GetAndProcessPrefabInfo("Tent");
+    
+    public void GetMushLogCabin() => GetAndProcessPrefabData("MushLogCabin");
+    public void GetMushLogCabin_InfoCosts() => GetAndProcessPrefabInfo("MushLogCabin");
+    
+    public void GetFarm() => GetAndProcessPrefabData("Farm");
+    public void GetFarm_InfoCosts() => GetAndProcessPrefabInfo("Farm");
+    
+    public void GetWall() => GetAndProcessPrefabData("Wall");
+    public void GetWall_InfoCosts() => GetAndProcessPrefabInfo("Wall");
+    
+    public void GetGate() => GetAndProcessPrefabData("Gate");
+    public void GetGate_InfoCosts() => GetAndProcessPrefabInfo("Gate");
+    
+    public void GetHall() => GetAndProcessPrefabData("Hall");
+    public void GetHall_InfoCosts() => GetAndProcessPrefabInfo("Hall");
 
 
     //public void GetTileByName(string tileName) => GetAndProcessPrefabData(tileName);

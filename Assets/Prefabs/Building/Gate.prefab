@@ -167,17 +167,36 @@ MonoBehaviour:
   canUpgrade: 1
   upgrade:
   - newTileName: Gate Plus
+    infoBox: Upgrade to PLUS benefits
     soulsCosts: 15
     mushLogCosts: 25
     hungerCosts: 30
     newMaxHealth: 45
     newArmor: 1
+    canUpgrade: 1
     canCallForRepair: 1
     canStopActiveActions: 0
     canAttack: 0
     newDamage: 0
     newAttackSpeed: 0
     newAttackRange: 0
+    allActionsCosts: []
+  - newTileName: Gate PlusPlus
+    infoBox: Upgrade to PlusPlus Benefits
+    soulsCosts: 30
+    mushLogCosts: 50
+    hungerCosts: 60
+    newMaxHealth: 250
+    newArmor: 5
+    canUpgrade: 0
+    canCallForRepair: 0
+    canStopActiveActions: 0
+    canAttack: 0
+    newDamage: 0
+    newAttackSpeed: 0
+    newAttackRange: 0
+    allActionsCosts: []
+  allActionsCosts: []
   animator: {fileID: -4263366933654270642}
   tileHandling: {fileID: 0}
   selectTile: {fileID: 0}

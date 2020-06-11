@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Gate : MonoBehaviour, IPassMethods
 {
@@ -9,13 +10,15 @@ public class Gate : MonoBehaviour, IPassMethods
         switch (m_ABuilding.currentUpgradeLevel)
         {
             case 0:
-            switch (methodNum)
-            {
-                case 0: return nameof(ToggleGate);
-                case 1: return nameof(Rotate);
-                case 2: return "";
-                case 3: return "";
-            }
+                
+                switch (methodNum)
+                {
+                    case 0: return nameof(ToggleGate);
+                    case 1: return nameof(Rotate);
+                    case 2: return "";
+                    case 3: return "";
+                }
+
                 break;
             case 1:
 
@@ -30,7 +33,70 @@ public class Gate : MonoBehaviour, IPassMethods
                 break;
         }
         
+        return null;
+    }
 
+
+    public Vector3Int PassMethodCosts(int methodNum)
+    {
+        switch (m_ABuilding.currentUpgradeLevel)
+                {
+                    case 0:
+                        
+                        switch (methodNum)
+                        {
+                            case 0: return new Vector3Int(1, 1, 1);
+                            case 1: return Vector3Int.zero;
+                            case 2: return Vector3Int.zero;
+                            case 3: return Vector3Int.zero;
+                        }
+        
+                        break;
+                    case 1:
+        
+                        switch (methodNum)
+                        {
+                            case 0: return Vector3Int.zero;
+                            case 1: return Vector3Int.zero;
+                            case 2: return Vector3Int.zero;
+                            case 3: return Vector3Int.zero;
+                        }
+        
+                        break;
+                }
+                
+                return Vector3Int.zero;
+    }
+
+
+    public string PassMethodInfo(int methodNum)
+    {
+        switch (m_ABuilding.currentUpgradeLevel)
+        {
+            case 0:
+                
+                switch (methodNum)
+                {
+                    case 0: return "stuff stuff";
+                    case 1: return "";
+                    case 2: return "";
+                    case 3: return "";
+                }
+
+                break;
+            case 1:
+
+                switch (methodNum)
+                {
+                    case 0: return "";
+                    case 1: return "";
+                    case 2: return "";
+                    case 3: return "";
+                }
+
+                break;
+        }
+        
         return null;
     }
 
@@ -40,11 +106,12 @@ public class Gate : MonoBehaviour, IPassMethods
         return this.GetType().Name;
     }
 
-    
-    public bool isOpen = false;
+
     private A_Building m_ABuilding;
+
     private static readonly int CloseGate = Animator.StringToHash("CloseGate");
     private static readonly int OpenGate = Animator.StringToHash("OpenGate");
+    public bool isOpen;
 
 
     private void Start()
@@ -83,5 +150,4 @@ public class Gate : MonoBehaviour, IPassMethods
     {
         transform.Rotate(transform.rotation.z >= 90f ? Vector3.zero : new Vector3(0, 0f, 90f));
     }
-
 }
