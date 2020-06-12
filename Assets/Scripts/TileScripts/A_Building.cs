@@ -227,7 +227,11 @@ public class A_Building : MonoBehaviour
             // DELETE OLD List
             upgradeTrigger.triggers.Clear();
             // Add to the appropriate entry's callback a Listener with all the actions(methods) it oughts to call    
-            onUpgradePointerClickEntry.callback.AddListener(eventData => { Upgrade(); });
+            onUpgradePointerClickEntry.callback.AddListener(eventData =>
+            {
+                Upgrade();
+                TriggerThisInAllSelectedUnits(nameof(Upgrade));
+            });
             // Add the Entry to the event trigger list
             upgradeTrigger.triggers.Add(onUpgradePointerClickEntry);
 
@@ -252,7 +256,11 @@ public class A_Building : MonoBehaviour
         if (repairTrigger.GetComponent<Button>().interactable)
         {
             repairTrigger.triggers.Clear();
-            onRepairPointerClickEntry.callback.AddListener(eventData => { Repair(); });
+            onRepairPointerClickEntry.callback.AddListener(eventData =>
+            {
+                Repair();
+                TriggerThisInAllSelectedUnits(nameof(Repair));
+            });
             repairTrigger.triggers.Add(onRepairPointerClickEntry);
             onRepairPointerEnterEntry.callback.AddListener(evenData =>
             {
@@ -267,7 +275,11 @@ public class A_Building : MonoBehaviour
         if (cancelTrigger.GetComponent<Button>().interactable)
         {
             cancelTrigger.triggers.Clear();
-            onStopPointerClickEntry.callback.AddListener(eventData => { StopAction(); });
+            onStopPointerClickEntry.callback.AddListener(eventData =>
+            {
+                StopAction();
+                TriggerThisInAllSelectedUnits(nameof(StopAction));
+            });
             cancelTrigger.triggers.Add(onStopPointerClickEntry);
             onStopPointerEnterEntry.callback.AddListener(evenData =>
             {
@@ -282,7 +294,11 @@ public class A_Building : MonoBehaviour
         if (attackTrigger.GetComponent<Button>().interactable)
         {
             attackTrigger.triggers.Clear();
-            onAttackPointerClickEntry.callback.AddListener(eventData => { Attack(); });
+            onAttackPointerClickEntry.callback.AddListener(eventData =>
+            {
+                Attack();
+                TriggerThisInAllSelectedUnits(nameof(Attack));
+            });
             attackTrigger.triggers.Add(onAttackPointerClickEntry);
             onAttackPointerEnterEntry.callback.AddListener(evenData =>
             {
@@ -313,8 +329,17 @@ public class A_Building : MonoBehaviour
             infoTrigger.triggers.Add(onInfoPointerExitEntry);
         }
     }
-    
-    
+
+
+    private void TriggerThisInAllSelectedUnits(string method)
+    {
+        for (var i = tileHandling.selectedUnits.Count - 1; i >= 1; i--)
+        {
+            tileHandling.selectedUnits[i].GetComponent<A_Building>().SendMessage(method);
+        }
+    }
+
+
     private void SetUpgradeButtonInfo()
     {
         tileHandling.canvasComponents.infoBoxText.text = upgrade[currentUpgradeLevel].infoBox;

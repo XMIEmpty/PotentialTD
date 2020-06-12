@@ -129,7 +129,10 @@ public class TileActionButtonGUI : MonoBehaviour
             onPointerClickEntry.callback.AddListener((eventData) => {
                 selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction);
                 tileHandling.resourceBarManager.SubtractAll(
-                    actionCosts.x, actionCosts.y, actionCosts.z); });
+                    actionCosts.x, actionCosts.y, actionCosts.z);
+                TriggerThisInAllSelectedUnits();
+            });
+            
             // Add the Entry to the event trigger list
             eventTrigger.triggers.Add(onPointerClickEntry);
         }
@@ -230,5 +233,23 @@ public class TileActionButtonGUI : MonoBehaviour
         //         selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerCancelAction); });
         //     eventTrigger.triggers.Add(onPointerCancelEntry);
         // }
+    }
+
+    private void TriggerThisInAllSelectedUnits()
+    {
+        for (var i = tileHandling.selectedUnits.Count - 1; i >= 1; i--)
+        {
+            tileHandling.selectedUnits[i].GetComponent(selectedScriptName).SendMessage(pointerClickAction);
+            tileHandling.resourceBarManager.SubtractAll(actionCosts.x, actionCosts.y, actionCosts.z);
+        }
+
+        // Index of this Unit in selectedUnitsList
+        
+        // is this index + 1 == null?
+            // Yes
+                // Do nothing (Basically Stop)
+            // No
+                
+                    // Set 
     }
 }

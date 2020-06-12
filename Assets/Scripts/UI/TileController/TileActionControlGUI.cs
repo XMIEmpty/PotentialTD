@@ -21,7 +21,7 @@ public class TileActionControlGUI : MonoBehaviour
     public void CreateButtonList()
     {
         // If SelectedUnit contains IPassMethods interface
-        if (!tilesHandler.selectedUnit.TryGetComponent(out IPassMethods passMethod)) return;
+        if (!tilesHandler.selectedUnits[0].TryGetComponent(out IPassMethods passMethod)) return;
 
         m_ActionInventory = new List<ActionItem>();
 
@@ -87,7 +87,7 @@ public class TileActionControlGUI : MonoBehaviour
             tileActionButtonGui.PassMethodCostsAndInfo(newActionInvItem.ActionCosts, newActionInvItem.ActionInfo);
             
             // Execute after all OnPoint Actions have been set
-            tileActionButtonGui.SetTileMainProperties(tilesHandler.selectedUnit, newActionInvItem.ScriptName); 
+            tileActionButtonGui.SetTileMainProperties(tilesHandler.selectedUnits[0], newActionInvItem.ScriptName); 
         }
         #endregion
     }

@@ -143,9 +143,12 @@ public class CanvasComponents : MonoBehaviour
 
     public void OnClickChanges()
     {
+        // Attempt to Select/Deselect
         if (tileHandling.selectedTileToBuild == null)
         {
-            if (tileHandling.selectedUnit == null) // When ground Selected
+            // Close Controllers
+            // Is nothing selected or multiple selected
+            if (tileHandling.selectedUnits.Count == 0) // When ground Selected
             {
                 Debug.Log("selectedUnit == null");
                 if (tileHandling.lastSelectedUnit != null)
@@ -165,7 +168,7 @@ public class CanvasComponents : MonoBehaviour
                             m_AnimatorTileController.SetTrigger(CloseTileController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, false);
 
-
+                            Debug.Log("ClosingTile");
                             break;
                     }
                 }
@@ -173,9 +176,78 @@ public class CanvasComponents : MonoBehaviour
                 return;
             }
 
-            if (tileHandling.selectedUnit)
+            // Edit Controllers
+            if (tileHandling.selectedUnits.Count > 0)
             {
-                switch (tileHandling.selectedUnit.layer) // When Entity Or Tile Selected
+                // Multiple Selected Units
+                switch (tileHandling.selectedUnits[0].layer)
+                {
+                    case 8: // Entity
+
+                        if (tileHandling.lastSelectedUnit == null)
+                        {
+                            // Opening Controller Entity
+                            m_AnimatorEntityController.SetTrigger(OpenEntityController);
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                            return;
+                        }
+
+                        if (tileHandling.lastSelectedUnit.layer == 9) // Tile
+                        {
+                            // Switching from Tile to Entity
+                            m_AnimatorEntityController.SetTrigger(OpenEntityController);
+                            m_AnimatorTileController.SetTrigger(CloseTileController);
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                        }
+
+                        if (tileHandling.lastSelectedUnit.layer == 8) // Entity
+                        {
+                            // Remaining on Entity
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                        }
+                        
+                        break;
+                    case 9: // Tile
+
+                        if (tileHandling.lastSelectedUnit == null) // Null
+                        {
+                            // Opening Controller Tile
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
+                            m_AnimatorTileController.SetTrigger(OpenTileController);
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                            return;
+                        }
+
+                        if (tileHandling.lastSelectedUnit.layer == 8) // Entity
+                        {
+                            // Switching from Entity To Tile
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
+                            m_AnimatorTileController.SetTrigger(OpenTileController);
+                            m_AnimatorEntityController.SetTrigger(CloseEntityController);
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                        }
+
+                        if (tileHandling.lastSelectedUnit.layer == 9) // Tile
+                        {
+                            // Remaining on Entity
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
+                            m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
+                        }
+                        //tileUpgrade_Button.onClick.AddListener(tileHandling.selectedUnit.GetComponent<A_Building>().action_Upgrade);
+                        
+                        break;
+                    
+                }
+                return;
+            }
+            
+            // Open Controllers
+            if (tileHandling.selectedUnits.Count > 0)
+            {
+                switch (tileHandling.selectedUnits[0].layer) // When Entity Or Tile Selected
                 {
                     case 8: // Entity
 
@@ -207,8 +279,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.lastSelectedUnit == null) // Null
                         {
                             // Opening Controller Tile
-                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
-                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorTileController.SetTrigger(OpenTileController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                             return;
@@ -217,8 +289,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.lastSelectedUnit.layer == 8) // Entity
                         {
                             // Switching from Entity To Tile
-                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
-                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorTileController.SetTrigger(OpenTileController);
                             m_AnimatorEntityController.SetTrigger(CloseEntityController);
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
@@ -227,8 +299,8 @@ public class CanvasComponents : MonoBehaviour
                         if (tileHandling.lastSelectedUnit.layer == 9) // Tile
                         {
                             // Remaining on Entity
-                            tileNameText.text = tileHandling.selectedUnit.GetComponent<A_Building>().tileName;
-                            tilePortraitImage.sprite = tileHandling.selectedUnit.GetComponent<SpriteRenderer>().sprite;
+                            tileNameText.text = tileHandling.selectedUnits[0].GetComponent<A_Building>().tileName;
+                            tilePortraitImage.sprite = tileHandling.selectedUnits[0].GetComponent<SpriteRenderer>().sprite;
                             m_AnimatorInfoBoxGo.SetBool(IsControllerOpen, true);
                         }
                         //tileUpgrade_Button.onClick.AddListener(tileHandling.selectedUnit.GetComponent<A_Building>().action_Upgrade);
@@ -242,21 +314,24 @@ public class CanvasComponents : MonoBehaviour
 
     private void UpdateValues()
     {
-        Debug.Log("Values Updated");
-
-        if (!tileHandling.selectedUnit) return;
-
-        switch (tileHandling.selectedUnit.layer)
+        if (tileHandling.selectedUnits.Count > 0)
         {
-            case 8: // Entity
-                //Debug.Log("It's an Entity");
-                break;
+            Debug.Log("Values Updated");
+
+            if (tileHandling.selectedUnits[0] != null) return;
+
+            switch (tileHandling.selectedUnits[0].layer)
+            {
+                case 8: // Entity
+                    //Debug.Log("It's an Entity");
+                    break;
 
 
-            case 9: // Tile
-                //Debug.Log("It's a Tileas");
+                case 9: // Tile
+                    //Debug.Log("It's a Tile");
 
-                break;
+                    break;
+            }
         }
     }
 }
