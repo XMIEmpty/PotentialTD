@@ -82,18 +82,21 @@ public class ResourceBarManager : MonoBehaviour
     {
         var newAmount = int.Parse(m_MushLog.text) - Math.Abs(amount);
         m_MushLog.text = newAmount.ToString();
+        SetBackToZero();
     }
 
     public void SubtractSouls(int amount)
     {
         var newAmount = int.Parse(m_Soul.text) - Math.Abs(amount);
         m_Soul.text = newAmount.ToString();
+        SetBackToZero();
     }
 
     public void SubtractFood(int amount)
     {
         var newAmount = int.Parse(m_Food.text) - Math.Abs(amount);
         m_Food.text = newAmount.ToString();
+        SetBackToZero();
     }
     
     public void SubtractAll(int mushLogAmount, int soulAmount, int foodAmount)
@@ -106,6 +109,7 @@ public class ResourceBarManager : MonoBehaviour
         
         var newFoodAmount = int.Parse(m_Food.text) - Math.Abs(foodAmount);
         m_Food.text = newFoodAmount.ToString();
+        SetBackToZero();
     }
     
     #endregion
@@ -114,4 +118,16 @@ public class ResourceBarManager : MonoBehaviour
     #region Convert
 
     #endregion
+
+    public void SetBackToZero()
+    {
+        if (int.Parse(m_MushLog.text) < 0)
+            m_MushLog.text = "0";
+        
+        if (int.Parse(m_Soul.text) < 0)
+            m_Soul.text = "0";
+        
+        if (int.Parse(m_Food.text) < 0)
+            m_Food.text = "0";
+    }
 }

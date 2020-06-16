@@ -133,12 +133,12 @@ MonoBehaviour:
   tileName: Wall
   currentUpgradeLevel: 0
   infoBox: I'm a wall I can only rotate for fashionable reasons haha
-  soulCosts: 5
-  mushLogCosts: 5
-  foodCosts: 1
+  mushLogCosts: 50
+  soulCosts: 0
+  foodCosts: 0
   allCosts: {x: 0, y: 0, z: 0}
-  maxHealth: 10
-  currentHealth: 0
+  maxHealth: 100
+  currentHealth: 10
   armor: 0
   canCallForRepair: 0
   canStopActiveActions: 0

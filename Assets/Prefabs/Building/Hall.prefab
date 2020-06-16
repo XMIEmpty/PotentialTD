@@ -151,16 +151,11 @@ MonoBehaviour:
   portrait: {fileID: 0}
   tileName: Town Hall
   currentUpgradeLevel: 0
-  infoBox: 'im wip
-
-    I am a placeholder for the town hall.
-
-    I will be spawning
-    workers and I am representing the checkpoint to deliver any kind of goods gathered.'
-  soulCosts: 5
-  mushLogCosts: 5
-  foodCosts: 1
-  allCosts: {x: 0, y: 0, z: 0}
+  infoBox: Converts Currencies
+  mushLogCosts: 50000
+  soulCosts: 5000
+  foodCosts: 0
+  allCosts: {x: 50000, y: 5000, z: 0}
   maxHealth: 10
   currentHealth: 0
   armor: 0
@@ -170,8 +165,38 @@ MonoBehaviour:
   damage: 1
   attackSpeed: 1
   attackRange: 0
-  canUpgrade: 0
-  upgrade: []
+  canUpgrade: 1
+  upgrade:
+  - newTileName: Town Haller
+    infoBox: 
+    mushLogCosts: 500000
+    soulCosts: 50000
+    foodCosts: 0
+    allCosts: {x: 500000, y: 50000, z: 0}
+    newMaxHealth: 0
+    newArmor: 0
+    canUpgrade: 1
+    canCallForRepair: 0
+    canStopActiveActions: 0
+    canAttack: 0
+    newDamage: 0
+    newAttackSpeed: 0
+    newAttackRange: 0
+  - newTileName: Town Hallest
+    infoBox: 
+    mushLogCosts: 0
+    soulCosts: 500000
+    foodCosts: 5000
+    allCosts: {x: 0, y: 500000, z: 5000}
+    newMaxHealth: 0
+    newArmor: 0
+    canUpgrade: 0
+    canCallForRepair: 0
+    canStopActiveActions: 0
+    canAttack: 0
+    newDamage: 0
+    newAttackSpeed: 0
+    newAttackRange: 0
   animator: {fileID: 0}
   tileHandling: {fileID: 0}
   selectTile: {fileID: 0}

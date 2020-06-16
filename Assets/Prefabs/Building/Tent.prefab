@@ -159,9 +159,9 @@ MonoBehaviour:
     I will be the
     place where a tired worker can sit down and sleep or eat to get back the energy
     he needs to work.'
-  soulCosts: 5
-  mushLogCosts: 5
-  foodCosts: 1
+  mushLogCosts: 0
+  soulCosts: 0
+  foodCosts: 0
   allCosts: {x: 0, y: 0, z: 0}
   maxHealth: 10
   currentHealth: 0

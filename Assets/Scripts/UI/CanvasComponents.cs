@@ -143,6 +143,8 @@ public class CanvasComponents : MonoBehaviour
 
     public void OnClickChanges()
     {
+        UpdateBuildsBar();
+        
         // Attempt to Select/Deselect
         if (tileHandling.selectedTileToBuild == null)
         {
@@ -334,7 +336,14 @@ public class CanvasComponents : MonoBehaviour
             }
         }
     }
+
+    
+    private void UpdateBuildsBar()
+    {
+        // Probably code that updates buildbar based on changes (Upgrades Complete, Buildings Built, etc.) 
+    }
 }
+
 
 //if (tileHandling.selectedUnit != null &&
 //    tileHandling.LastSelectedUnit != null &&

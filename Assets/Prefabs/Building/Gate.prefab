@@ -153,9 +153,9 @@ MonoBehaviour:
   tileName: Gate
   currentUpgradeLevel: 0
   infoBox: Im a gate i open and close haha
-  soulCosts: 5
-  mushLogCosts: 5
-  foodCosts: 10
+  mushLogCosts: 100
+  soulCosts: 10
+  foodCosts: 1
   allCosts: {x: 0, y: 0, z: 0}
   maxHealth: 10
   currentHealth: 0
@@ -166,12 +166,12 @@ MonoBehaviour:
   damage: 1
   attackSpeed: 1
   attackRange: 0
-  canUpgrade: 1
+  canUpgrade: 0
   upgrade:
   - newTileName: Gate Plus
     infoBox: Upgrade to PLUS benefits
-    soulCosts: 0
     mushLogCosts: 25
+    soulCosts: 0
     foodCosts: 0
     allCosts: {x: 0, y: 0, z: 0}
     newMaxHealth: 45
@@ -185,8 +185,8 @@ MonoBehaviour:
     newAttackRange: 0
   - newTileName: Gate PlusPlus
     infoBox: Upgrade to PlusPlus Benefits
-    soulCosts: 0
     mushLogCosts: 50
+    soulCosts: 0
     foodCosts: 0
     allCosts: {x: 0, y: 0, z: 0}
     newMaxHealth: 250

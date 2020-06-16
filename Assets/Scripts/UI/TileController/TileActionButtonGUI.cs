@@ -70,32 +70,6 @@ public class TileActionButtonGUI : MonoBehaviour
     #endregion
 
 
-    private void SetActionButtonCostsAndInfo()
-    {
-        tileHandling.canvasComponents.infoBoxText.text = actionInfo;
-        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(OpenInfoBox);
-        ApplyCosts();
-        tileHandling.canvasComponents.costsBoxGo.SetActive(true);
-    }
-
-
-    private void ApplyCosts()
-    {
-        tileHandling.canvasComponents.mushLogCostsText.text = actionCosts.x.ToString(); // MushLog
-        tileHandling.canvasComponents.soulCostsText.text = actionCosts.y.ToString(); // Soul
-        tileHandling.canvasComponents.foodCostsText.text = actionCosts.z.ToString(); // Food
-    }
-    
-    
-    private void EmptyAndCloseCostsAndInfoBox()
-    {
-        tileHandling.canvasComponents.infoBoxText.text = "";
-        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(CloseInfoBox);
-        // Empty Costs Values and Close that as well
-        tileHandling.canvasComponents.costsBoxGo.SetActive(false);
-    }
-    
-    
     /// <summary>
     /// Add the appropriate (based on settings) Events to the Event Trigger component
     /// Set up the Events with the appropriately added methods 
@@ -126,10 +100,11 @@ public class TileActionButtonGUI : MonoBehaviour
         if (!string.IsNullOrEmpty(pointerClickAction)) // On CLICK
         {
             // Add to the appropriate entry's callback a Listener with all the actions(methods) it oughts to call    
-            onPointerClickEntry.callback.AddListener((eventData) => {
+            onPointerClickEntry.callback.AddListener((eventData) =>{
                 selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction);
                 tileHandling.resourceBarManager.SubtractAll(
                     actionCosts.x, actionCosts.y, actionCosts.z);
+                CheckPrices();
                 TriggerThisInAllSelectedUnits();
             });
             
@@ -139,13 +114,21 @@ public class TileActionButtonGUI : MonoBehaviour
 
         if (!string.IsNullOrEmpty(pointerClickAction)) // On Pointer Enter
         {
-            onPointerEnterEntry.callback.AddListener((eventData) => { SetActionButtonCostsAndInfo(); });
+            onPointerEnterEntry.callback.AddListener((eventData) =>
+            {
+                CheckPrices();
+                SetActionButtonCostsAndInfo();
+            });
             eventTrigger.triggers.Add(onPointerEnterEntry);
         }
         
         if (!string.IsNullOrEmpty(pointerClickAction)) // On Pointer Exit
         {
-            onPointerExitEntry.callback.AddListener((eventData) => { EmptyAndCloseCostsAndInfoBox();});
+            onPointerExitEntry.callback.AddListener((eventData) =>
+            {
+                ResetValuesOnPointerExit();
+                EmptyAndCloseCostsAndInfoBox();
+            });
             eventTrigger.triggers.Add(onPointerExitEntry);
         }
         //
@@ -235,6 +218,61 @@ public class TileActionButtonGUI : MonoBehaviour
         // }
     }
 
+    
+    private void SetActionButtonCostsAndInfo()
+    {
+        tileHandling.canvasComponents.infoBoxText.text = actionInfo;
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(OpenInfoBox);
+        ApplyCosts();
+        tileHandling.canvasComponents.costsBoxGo.SetActive(true);
+    }
+
+
+    private void ApplyCosts()
+    {
+        tileHandling.canvasComponents.mushLogCostsText.text = actionCosts.x.ToString(); // MushLog
+        tileHandling.canvasComponents.soulCostsText.text = actionCosts.y.ToString(); // Soul
+        tileHandling.canvasComponents.foodCostsText.text = actionCosts.z.ToString(); // Food
+    }
+
+
+    public void ResetValuesOnPointerExit()
+    {
+        tileHandling.canvasComponents.mushLogCostsText.GetComponent<Text>().color = Color.white;
+        tileHandling.canvasComponents.soulCostsText.GetComponent<Text>().color = Color.white;
+        tileHandling.canvasComponents.foodCostsText.GetComponent<Text>().color = Color.white;
+
+        var eventTrigger = GetComponent<EventTrigger>();
+        
+        for (var i = eventTrigger.triggers.Count - 1; i >= 0; i--)
+        {
+            if (eventTrigger.triggers[i].eventID != EventTriggerType.PointerClick)continue;
+            eventTrigger.triggers[i].callback.RemoveAllListeners();
+        }
+        
+        var onPointerClickEntry = new EventTrigger.Entry();
+        onPointerClickEntry.eventID = EventTriggerType.PointerClick;
+        onPointerClickEntry.callback.AddListener((eventData) =>
+        {
+            selectedBuilding.GetComponent(selectedScriptName).SendMessage(pointerClickAction);
+            tileHandling.resourceBarManager.SubtractAll(
+                actionCosts.x, actionCosts.y, actionCosts.z);
+            CheckPrices();
+            TriggerThisInAllSelectedUnits();
+        });
+        eventTrigger.triggers.Add(onPointerClickEntry);
+    }
+
+    
+    private void EmptyAndCloseCostsAndInfoBox()
+    {
+        tileHandling.canvasComponents.infoBoxText.text = "";
+        tileHandling.canvasComponents.infoBoxGo.GetComponent<Animator>().SetTrigger(CloseInfoBox);
+        // Empty Costs Values and Close that as well
+        tileHandling.canvasComponents.costsBoxGo.SetActive(false);
+    }
+
+
     private void TriggerThisInAllSelectedUnits()
     {
         for (var i = tileHandling.selectedUnits.Count - 1; i >= 1; i--)
@@ -242,14 +280,34 @@ public class TileActionButtonGUI : MonoBehaviour
             tileHandling.selectedUnits[i].GetComponent(selectedScriptName).SendMessage(pointerClickAction);
             tileHandling.resourceBarManager.SubtractAll(actionCosts.x, actionCosts.y, actionCosts.z);
         }
+    }
 
-        // Index of this Unit in selectedUnitsList
+    private void CheckPrices()
+    {
+        if (tileHandling.resourceBarManager.GetMushLogAmount() < actionCosts.x /*MushLog Costs*/)
+        {
+            tileHandling.canvasComponents.mushLogCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+        }
+
+        if (tileHandling.resourceBarManager.GetSoulAmount() < actionCosts.y /*Soul Costs*/)
+        {
+            tileHandling.canvasComponents.soulCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+        }
         
-        // is this index + 1 == null?
-            // Yes
-                // Do nothing (Basically Stop)
-            // No
-                
-                    // Set 
+        if  (tileHandling.resourceBarManager.GetFoodAmount() < actionCosts.z /*Food Costs*/)
+        {
+            tileHandling.canvasComponents.foodCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+        }
+
+        if (tileHandling.resourceBarManager.GetMushLogAmount() >= actionCosts.x &&
+            tileHandling.resourceBarManager.GetSoulAmount() >= actionCosts.y &&
+            tileHandling.resourceBarManager.GetFoodAmount() >= actionCosts.z) return;
+        
+        var eventTrigger = GetComponent<EventTrigger>();
+        for (var i = eventTrigger.triggers.Count - 1; i >= 0; i--)
+        {
+            if (eventTrigger.triggers[i].eventID != EventTriggerType.PointerClick)continue;
+            eventTrigger.triggers[i].callback.RemoveAllListeners();
+        }
     }
 }

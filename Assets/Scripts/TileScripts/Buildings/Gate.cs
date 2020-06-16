@@ -45,7 +45,7 @@ public class Gate : MonoBehaviour, IPassMethods
                         
                         switch (methodNum)
                         {
-                            case 0: return new Vector3Int(1, 1, 1);
+                            case 0: return Vector3Int.zero;
                             case 1: return Vector3Int.zero;
                             case 2: return Vector3Int.zero;
                             case 3: return Vector3Int.zero;

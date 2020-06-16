@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
@@ -23,8 +24,8 @@ public class A_Building : MonoBehaviour
     [TextArea] public string infoBox;
     // public string UL_Text, UR_Text, DL_Text, DR_Text;
 
-    [Header("BuildCosts")] [Space(15)] public int soulCosts = 5;
-    public int mushLogCosts = 5;
+    [Header("BuildCosts")] [Space(15)] public int mushLogCosts = 5;
+    public int soulCosts = 5;
     public int foodCosts = 1;
     public Vector3Int allCosts;
 
@@ -54,8 +55,8 @@ public class A_Building : MonoBehaviour
         [TextArea] public string infoBox;
 
 
-        [Space(10)] public int soulCosts;
-        public int mushLogCosts;
+        [Space(10)] public int mushLogCosts;
+        public int soulCosts;
         public int foodCosts;
         public Vector3Int allCosts;
 
@@ -74,7 +75,7 @@ public class A_Building : MonoBehaviour
 
     [HideInInspector] public TileHandling tileHandling;
     [SerializeField] private SelectTile selectTile;
-
+    private IBuildingExtras iBuildingExtras;
 
     [Header("Sprite Stuff")] private Sprite m_Sprite;
     private static readonly int CloseInfoBox = Animator.StringToHash("Close_InfoBox");
@@ -91,6 +92,21 @@ public class A_Building : MonoBehaviour
         allCosts.x = mushLogCosts;
         allCosts.y = soulCosts;
         allCosts.z = foodCosts;
+
+        iBuildingExtras = GetComponent<IBuildingExtras>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("\n\rResourceBar MushLogs " + tileHandling.resourceBarManager.GetMushLogAmount() +
+                      "\n\rResourceBar Souls " + tileHandling.resourceBarManager.GetSoulAmount() +
+                      "\n\rResourceBar Food " + tileHandling.resourceBarManager.GetFoodAmount() +
+                      "\n\r\n\r Upgrade MushLog Costs " + upgrade[currentUpgradeLevel].allCosts.x +
+                      "\n\r Upgrade Soul Costs " + upgrade[currentUpgradeLevel].allCosts.y +
+                      "\n\r Upgrade Food Costs " + upgrade[currentUpgradeLevel].allCosts.z);
+        }
     }
 
 
@@ -106,10 +122,10 @@ public class A_Building : MonoBehaviour
             return;
         }
 
-        tileHandling.resourceBarManager.SubtractAll(
-            upgrade[currentUpgradeLevel].mushLogCosts,
-            upgrade[currentUpgradeLevel].soulCosts,
-            upgrade[currentUpgradeLevel].foodCosts);
+        // tileHandling.resourceBarManager.SubtractAll(
+        //     upgrade[currentUpgradeLevel].mushLogCosts,
+        //     upgrade[currentUpgradeLevel].soulCosts,
+        //     upgrade[currentUpgradeLevel].foodCosts);
 
         tileName = upgrade[currentUpgradeLevel].newTileName;
         infoBox = upgrade[currentUpgradeLevel].infoBox;
@@ -139,6 +155,11 @@ public class A_Building : MonoBehaviour
         tileHandling.canvasComponents.tileActionControlGuiScript.CreateButtonList();
         UpdateDefaultButtonStatus();
         tileHandling.canvasComponents.OnClickChanges();
+        tileHandling.resourceBarManager.SubtractAll(
+            upgrade[currentUpgradeLevel - 1].mushLogCosts,
+            upgrade[currentUpgradeLevel - 1].soulCosts,
+            upgrade[currentUpgradeLevel - 1].foodCosts);
+        iBuildingExtras?.OnUpgrade();
     }
 
     
@@ -221,15 +242,21 @@ public class A_Building : MonoBehaviour
         var onInfoPointerEnterEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
         var onInfoPointerExitEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
 
+        
+        
         // Is Upgrade Button Interactable
         if (upgradeTrigger.GetComponent<Button>().interactable)
         {
-            // DELETE OLD List
             upgradeTrigger.triggers.Clear();
             // Add to the appropriate entry's callback a Listener with all the actions(methods) it oughts to call    
             onUpgradePointerClickEntry.callback.AddListener(eventData =>
             {
                 Upgrade();
+                // tileHandling.resourceBarManager.SubtractAll(
+                //     upgrade[currentUpgradeLevel].mushLogCosts,
+                //     upgrade[currentUpgradeLevel].soulCosts,
+                //     upgrade[currentUpgradeLevel].foodCosts);
+                CheckPrices();
                 TriggerThisInAllSelectedUnits(nameof(Upgrade));
             });
             // Add the Entry to the event trigger list
@@ -238,20 +265,22 @@ public class A_Building : MonoBehaviour
             onUpgradePointerEnterEntry.callback.AddListener(evenData =>
             {
                 // Display Costs, Display Info Box
+                CheckPrices();
                 if (currentUpgradeLevel < upgrade.Length) SetUpgradeButtonInfo();
-                // selectTile.Invoke("Get" + name.Replace("(Clone)", string.Empty) + "_InfoCosts", 0f);
             });
             upgradeTrigger.triggers.Add(onUpgradePointerEnterEntry);
             
             onUpgradePointerExitEntry.callback.AddListener(eventData =>
             {
-                // if (eventData == null) throw new ArgumentNullException(nameof(eventData));
                 // Hide Costs, Hide Info Box
-                Invoke(nameof(EmptyAndClosePrefabInfo), 0f);
+                ResetValuesOnPointerExit();
+                EmptyAndClosePrefabInfo();
             });
             upgradeTrigger.triggers.Add(onUpgradePointerExitEntry);
         }
 
+        
+        
         // Is Repair Button Interactable
         if (repairTrigger.GetComponent<Button>().interactable)
         {
@@ -374,5 +403,67 @@ public class A_Building : MonoBehaviour
         if (canStopActiveActions) tileHandling.canvasComponents.tileCancelButton.interactable = true;
         if (!canAttack) tileHandling.canvasComponents.tileAttackButton.interactable = false;
         if (canAttack) tileHandling.canvasComponents.tileAttackButton.interactable = true;
+    }
+
+    private void CheckPrices()
+    {
+        // Max Upgrade Level Reached!
+        if (currentUpgradeLevel >= upgrade.Length) return;
+
+        if (tileHandling.resourceBarManager.GetMushLogAmount() < upgrade[currentUpgradeLevel].allCosts.x /*MushLog Costs*/)
+            tileHandling.canvasComponents.mushLogCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+
+        if (tileHandling.resourceBarManager.GetSoulAmount() < upgrade[currentUpgradeLevel].allCosts.y /*Soul Costs*/)
+            tileHandling.canvasComponents.soulCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+
+        if (tileHandling.resourceBarManager.GetFoodAmount() < upgrade[currentUpgradeLevel].allCosts.z /*Food Costs*/)
+            tileHandling.canvasComponents.foodCostsText.GetComponent<Text>().color = new Color(0.94f, 0.26f, 0.18f);
+
+        if (tileHandling.resourceBarManager.GetMushLogAmount() >= upgrade[currentUpgradeLevel].allCosts.x &&
+            tileHandling.resourceBarManager.GetSoulAmount() >= upgrade[currentUpgradeLevel].allCosts.y &&
+            tileHandling.resourceBarManager.GetFoodAmount() >= upgrade[currentUpgradeLevel].allCosts.z)
+        {
+            return;
+        }
+
+        var upgradeTrigger = tileHandling.canvasComponents.tileUpgradeButton.GetComponent<EventTrigger>();
+
+        for (var i = upgradeTrigger.triggers.Count - 1; i >= 0; i--)
+        {
+            if (upgradeTrigger.triggers[i].eventID != EventTriggerType.PointerClick) continue;
+            upgradeTrigger.triggers[i].callback.RemoveAllListeners();
+        }
+    }
+
+    private void ResetValuesOnPointerExit()
+    {
+        // Max Upgrade Level Reached!
+        if (currentUpgradeLevel >= upgrade.Length) return;
+        
+        tileHandling.canvasComponents.mushLogCostsText.GetComponent<Text>().color = Color.white;
+        tileHandling.canvasComponents.soulCostsText.GetComponent<Text>().color = Color.white;
+        tileHandling.canvasComponents.foodCostsText.GetComponent<Text>().color = Color.white;
+
+        var upgradeTrigger = tileHandling.canvasComponents.tileUpgradeButton.GetComponent<EventTrigger>();
+        
+        for (var i = upgradeTrigger.triggers.Count - 1; i >= 0; i--)
+        {
+            if (upgradeTrigger.triggers[i].eventID != EventTriggerType.PointerClick) continue;
+            upgradeTrigger.triggers[i].callback.RemoveAllListeners();
+        }
+
+        var onPointerClickEntry = new EventTrigger.Entry();
+        onPointerClickEntry.eventID = EventTriggerType.PointerClick;
+        onPointerClickEntry.callback.AddListener((eventData) =>
+        {
+            Upgrade();
+            // tileHandling.resourceBarManager.SubtractAll(
+            //     upgrade[currentUpgradeLevel].mushLogCosts,
+            //     upgrade[currentUpgradeLevel].soulCosts,
+            //     upgrade[currentUpgradeLevel].foodCosts);
+            CheckPrices();
+            TriggerThisInAllSelectedUnits(nameof(Upgrade));
+        });
+        upgradeTrigger.triggers.Add(onPointerClickEntry);
     }
 }

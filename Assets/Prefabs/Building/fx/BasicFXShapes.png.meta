@@ -1,0 +1,871 @@
+fileFormatVersion: 2
+guid: 01ece787c6c8271439108a40b52c5560
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6957746299086450385
+    second: BasicFXShapes_0
+  - first:
+      213: -1897316257926614844
+    second: BasicFXShapes_1
+  - first:
+      213: -1758094263216634252
+    second: BasicFXShapes_2
+  - first:
+      213: -6417750108310508100
+    second: BasicFXShapes_3
+  - first:
+      213: 2884821264216627028
+    second: BasicFXShapes_4
+  - first:
+      213: -5449918665048774885
+    second: BasicFXShapes_5
+  - first:
+      213: 1497243288679474822
+    second: BasicFXShapes_6
+  - first:
+      213: -3751269680298144677
+    second: BasicFXShapes_7
+  - first:
+      213: 4404456343920933499
+    second: BasicFXShapes_8
+  - first:
+      213: -2482295052962174262
+    second: BasicFXShapes_9
+  - first:
+      213: -8121594944125055696
+    second: BasicFXShapes_10
+  - first:
+      213: 6035157235434128577
+    second: BasicFXShapes_11
+  - first:
+      213: 1789765014093949455
+    second: BasicFXShapes_12
+  - first:
+      213: -1059438465324346624
+    second: BasicFXShapes_13
+  - first:
+      213: 7794812463821125853
+    second: BasicFXShapes_14
+  - first:
+      213: 4908740350984813887
+    second: BasicFXShapes_15
+  - first:
+      213: 5605989175401671447
+    second: BasicFXShapes_16
+  - first:
+      213: -8233879611015797085
+    second: BasicFXShapes_17
+  - first:
+      213: 666705750118945119
+    second: BasicFXShapes_18
+  - first:
+      213: 1174393510393877924
+    second: BasicFXShapes_19
+  - first:
+      213: -1534735856575050042
+    second: BasicFXShapes_20
+  - first:
+      213: -1468957790390962496
+    second: BasicFXShapes_21
+  - first:
+      213: 6066358153055010224
+    second: BasicFXShapes_22
+  - first:
+      213: -7945073903651423844
+    second: BasicFXShapes_23
+  - first:
+      213: -2818280848246883398
+    second: BasicFXShapes_24
+  - first:
+      213: 9141395762177874345
+    second: BasicFXShapes_25
+  - first:
+      213: -2995950557545744659
+    second: BasicFXShapes_26
+  - first:
+      213: 3854061994306989524
+    second: BasicFXShapes_27
+  - first:
+      213: -7607881612825245382
+    second: BasicFXShapes_28
+  - first:
+      213: 3720347183138105982
+    second: BasicFXShapes_29
+  - first:
+      213: -6527516849470709596
+    second: BasicFXShapes_30
+  - first:
+      213: -1954071403468578836
+    second: BasicFXShapes_31
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 32
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 32
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BasicFXShapes_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21d9adca9e117f90800000000000000
+      internalID: -6957746299086450385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_1
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 13
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c0f5b37ae06ba5e0800000000000000
+      internalID: -1897316257926614844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_2
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 13
+        width: 3
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4760257159ef997e0800000000000000
+      internalID: -1758094263216634252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 13
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbd6de877429fe6a0800000000000000
+      internalID: -6417750108310508100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_4
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 13
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4571026c7a1f80820800000000000000
+      internalID: 2884821264216627028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_5
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 13
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b172ffa59dffd54b0800000000000000
+      internalID: -5449918665048774885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_6
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 13
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 686e31c96d647c410800000000000000
+      internalID: 1497243288679474822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_7
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 12
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5cc221d910d0fbc0800000000000000
+      internalID: -3751269680298144677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a7f1085b5cf1d30800000000000000
+      internalID: 4404456343920933499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_9
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 9
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acaea741dcd1d8dd0800000000000000
+      internalID: -2482295052962174262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_10
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 9
+        width: 3
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d41d9ad6c4a4f80800000000000000
+      internalID: -8121594944125055696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_11
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 9
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c40eada78f21c350800000000000000
+      internalID: 6035157235434128577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_12
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 10
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0aed783cc586d810800000000000000
+      internalID: 1789765014093949455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_13
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 9
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00315f4345e1c41f0800000000000000
+      internalID: -1059438465324346624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_14
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 9
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd878dc13acbc2c60800000000000000
+      internalID: 7794812463821125853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_15
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 8
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3d731377595f1440800000000000000
+      internalID: 4908740350984813887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71b608604797ccd40800000000000000
+      internalID: 5605989175401671447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_17
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 5
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a662166e126bbd80800000000000000
+      internalID: -8233879611015797085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 5
+        width: 3
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f51dc8de85d904900800000000000000
+      internalID: 666705750118945119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_19
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 5
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a51d8deca84c4010800000000000000
+      internalID: 1174393510393877924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_20
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 5
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ce0accaed583bae0800000000000000
+      internalID: -1534735856575050042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_21
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 5
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c634b92ca63d9be0800000000000000
+      internalID: -1468957790390962496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_22
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 5
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bd73296998003450800000000000000
+      internalID: 6066358153055010224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_23
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 4
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9971a2216d6db190800000000000000
+      internalID: -7945073903651423844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abb35fa108473e8d0800000000000000
+      internalID: -2818280848246883398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_25
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a99fd33303ccde70800000000000000
+      internalID: 9141395762177874345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_26
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 3
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de63ad457de3c66d0800000000000000
+      internalID: -2995950557545744659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_27
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 1
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dd6001d6f06c7530800000000000000
+      internalID: 3854061994306989524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_28
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 1
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a39435e3bff5b6690800000000000000
+      internalID: -7607881612825245382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_29
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7a62144d0451a330800000000000000
+      internalID: 3720347183138105982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_30
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 1
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a0ebe9720a9965a0800000000000000
+      internalID: -6527516849470709596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BasicFXShapes_31
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cef9182696eb1e4e0800000000000000
+      internalID: -1954071403468578836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -152,17 +152,18 @@ MonoBehaviour:
   portrait: {fileID: 0}
   tileName: Mush Log Cabin
   currentUpgradeLevel: 0
-  infoBox: 'im wip
+  infoBox: 'On Click
 
-    I am a placeholder for a sort of lumber mill but with mush
-    logs instead!
+    6000 MushLogs - 250 Souls
 
-    I will be able to improve the amount of mushlogs your workers
-    can gather and will represent a checkpoint for your mushlogs to be delivered.'
-  soulCosts: 5
-  mushLogCosts: 5
-  foodCosts: 1
-  allCosts: {x: 0, y: 0, z: 0}
+    Automated
+
+    600 MushLogs
+    - 25 Souls'
+  mushLogCosts: 1000000
+  soulCosts: 3650
+  foodCosts: 10
+  allCosts: {x: 1000000, y: 3650, z: 10}
   maxHealth: 10
   currentHealth: 0
   armor: 0
@@ -174,21 +175,72 @@ MonoBehaviour:
   attackRange: 0.01
   canUpgrade: 1
   upgrade:
-  - newTileName: Mush Log Cabin OP Edition
-    infoBox: 
-    soulCosts: 0
-    mushLogCosts: 5
-    foodCosts: 0
-    allCosts: {x: 0, y: 0, z: 0}
+  - newTileName: Mush Log Cabin++
+    infoBox: 'On Click
+
+      90000 MushLogs - 3750 Souls
+
+      Automated
+
+      3000
+      MushLogs - 125 Souls'
+    mushLogCosts: 9500000
+    soulCosts: 600000
+    foodCosts: 980
+    allCosts: {x: 9500000, y: 600000, z: 980}
+    newMaxHealth: 0
+    newArmor: 2
+    canUpgrade: 1
+    canCallForRepair: 0
+    canStopActiveActions: 0
+    canAttack: 0
+    newDamage: 1
+    newAttackSpeed: 1
+    newAttackRange: 3
+  - newTileName: Mush Log Cabin OP
+    infoBox: 'On Click
+
+      720000 MushLogs - 30000 Souls - 600 Food
+
+      Automated
+
+      30000
+      MushLogs - 1250 Souls - 30 Food'
+    mushLogCosts: 0
+    soulCosts: 350000
+    foodCosts: 50000
+    allCosts: {x: 0, y: 350000000, z: 50000}
+    newMaxHealth: 0
+    newArmor: 2
+    canUpgrade: 1
+    canCallForRepair: 0
+    canStopActiveActions: 0
+    canAttack: 0
+    newDamage: 0
+    newAttackSpeed: 0.01
+    newAttackRange: 0.01
+  - newTileName: Mushest Loggest Cabinest!
+    infoBox: 'On Click
+
+      10800000 MushLogs - 450,000 Souls - 6000 Food
+
+      Automated
+
+      180000
+      MushLogs - 7500 Souls - 900 Food'
+    mushLogCosts: 0
+    soulCosts: 789456123
+    foodCosts: 2500000
+    allCosts: {x: 0, y: 789456123, z: 2500000}
     newMaxHealth: 0
     newArmor: 2
     canUpgrade: 0
     canCallForRepair: 0
     canStopActiveActions: 0
-    canAttack: 1
-    newDamage: 1
-    newAttackSpeed: 1
-    newAttackRange: 3
+    canAttack: 0
+    newDamage: 0
+    newAttackSpeed: 0.01
+    newAttackRange: 0.01
   animator: {fileID: 0}
   tileHandling: {fileID: 0}
   selectTile: {fileID: 0}
@@ -204,6 +256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2774b77322f2e0446801b51c585927e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolVfx: {fileID: 1877648165470169112, guid: cebb6b2e64b604c4799bc713d5014ada, type: 3}
+  mushLogGoods: 6000
+  soulGoods: 250
+  constantMushLogGoods: 600
+  constantSoulGoods: 25
+  constantFoodGoods: 5
 --- !u!1001 &4122604826211297623
 PrefabInstance:
   m_ObjectHideFlags: 0
